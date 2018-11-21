@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">FE&lt;StockX></string>
+    <string name="Settings"> Settings</string>
+    <string name="setSettings"> Set your settings:</string>
+    <string name="firstName">First Name:</string>
+    <string name="firstNameHint">Enter your first name here</string>
+    <string name="lastName">Last Name:</string>
+    <string name="emailAddress">Email Address: </string>
+    <string name="pStockEx">Preferred Stock Exchange: </string>
+    <string name="currency">Preferred Currency:</string>
+
 </resources>
