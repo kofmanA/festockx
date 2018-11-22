@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5sp"
             android:inputType="textEmailAddress"
+
             android:hint="@string/emailAddressHint"/>
     </LinearLayout>
 

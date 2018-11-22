@@ -23,5 +23,9 @@
     <string name="save">Save</string>
     <string name="saved">Settings Saved</string>
     <string name="invalidEmail">Your email is invalid. Please try again.</string>
+    <string name="backSettingTitle">Unsaved Settings</string>
+    <string name="backSettingContent">Are you sure you want to go back?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 
 </resources>
