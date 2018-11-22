@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FE&lt;StockX></string>
+    <string name="number_input">Enter number of tickers</string>
+    <string name="enterTickers">Enter ticker names here</string>
+    <string name="title_activity_ticker_input">TickerInputActivity</string>
 </resources>

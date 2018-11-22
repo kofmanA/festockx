@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".StockActivity" />
+        <activity android:name=".StockNumberSelectActivity" />
+        <activity android:name=".TickerEnterActivity" />
+        <activity
+            android:name=".TickerInputActivity"
+            android:label="@string/title_activity_ticker_input"></activity>
     </application>
 
 </manifest>
