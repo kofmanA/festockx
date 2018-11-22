@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">FE&lt;StockX></string>
+    <string name="Settings"> Settings</string>
+    <string name="setSettings"> Set your settings:</string>
+    <string name="firstName">First Name:</string>
+    <string name="firstNameHint">Enter your first name here</string>
+    <string name="lastName">Last Name:</string>
+    <string name="lastNameHint">Enter your last name here</string>
+    <string name="emailAddress">Email Address: </string>
+    <string name="emailAddressHint">example@gmail.com</string>
+    <string name="currency">Preferred Currency:</string>
+    <string name="pStockEx">Preferred Stock Exchange: </string>
+    <string-array name="PSE">
+    <item>TSX</item>
+    <item>NYSE</item>
+    <item>NASDAQ</item>
+    </string-array>
+    <string-array name="CURR">
+        <item>CAN</item>
+        <item>USD</item>
+        <item>BTC</item>
+    </string-array>
+    <string name="save">Save</string>
+    <string name="saved">Settings Saved</string>
+    <string name="invalidEmail">Your email is invalid. Please try again.</string>
+
 </resources>
