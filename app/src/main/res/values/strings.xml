@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">FE&lt;StockX></string>
+
+    <string name="about">About</string>
+    <string name="description">Stock X is intended to be a tool for education about finances such as loans, currency exchange and the sotck market. It is a sort of simulator that allows you to use "virtual" money to see what exactly could happen in the real world when you ask for loans, exchange your currency or invest in stocks. Our app can help you learn about the behaviour of the fluctuating world of finances without risking real money</string>
+    <string name="purpose">Stock X was created by 5th semester students as a part of both Internet Application Development III (420-524-DW) and Mobile Software Development (420-518-DW) courses for the Dawson College Computer Science program.</string>
+    <string name="devs">Developers</string>
+    <string name="felicia">Felicia Gorgacheva</string>
+    <string name="simon">Simon Guevara</string>
+    <string name="zhijie">Zhijie Cao</string>
+    <string name="alex">Alex Kofman</string>
 </resources>
