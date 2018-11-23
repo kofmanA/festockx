@@ -97,6 +97,10 @@ public class SettingsActivity extends Activity {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    /**Creates a dialog to confirm whether the user wants to go back.
+     * The dialog is Yes/No. If yes, calls the private method that calls super
+     * @author: Simon Guevara-Ponce
+     */
     @Override
     public void onBackPressed()
     {
@@ -114,14 +118,15 @@ public class SettingsActivity extends Activity {
                 dialog.dismiss();
             }
         });
-
-        // code here to show dialog
-        // optional depending on your needs
-        // User clicked Yes button
-
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    public void goBack(){
+
+     /**Calls super.onBackPressed
+      * @author: Simon Guevara-Ponce
+     */
+    private void goBack(){
         super.onBackPressed();
     }
 
