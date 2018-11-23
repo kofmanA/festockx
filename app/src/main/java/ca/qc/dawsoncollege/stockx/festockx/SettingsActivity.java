@@ -1,7 +1,9 @@
 package ca.qc.dawsoncollege.stockx.festockx;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +23,6 @@ public class SettingsActivity extends Activity {
     EditText eAddressET;
     Spinner pStockExSpin;
     Spinner currencySpin ;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,9 @@ public class SettingsActivity extends Activity {
             editor.putString("eAddress", eAddressET.getText().toString());
             editor.putString("pStockEx", pStockExSpin.getSelectedItem().toString());
             editor.putString("currency", currencySpin.getSelectedItem().toString());
+            editor.putString("lastUpdated",new Date().toString());
             editor.commit();
+
             Toast.makeText(this,R.string.saved,Toast.LENGTH_SHORT).show();
 
         }
@@ -91,6 +95,39 @@ public class SettingsActivity extends Activity {
      */
     private boolean isEmailValid(String email){
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    /**Creates a dialog to confirm whether the user wants to go back.
+     * The dialog is Yes/No. If yes, calls the private method that calls super
+     * @author: Simon Guevara-Ponce
+     */
+    @Override
+    public void onBackPressed()
+    {
+        final Boolean cancelled;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.backSettingContent)
+                .setTitle(R.string.backSettingTitle);
+        builder.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                goBack();
+            }
+        });
+        builder.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+     /**Calls super.onBackPressed
+      * @author: Simon Guevara-Ponce
+     */
+    private void goBack(){
+        super.onBackPressed();
     }
 
 }
