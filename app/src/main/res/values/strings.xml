@@ -27,5 +27,6 @@
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="noNotes">No notes available</string>
 
 </resources>

@@ -1,0 +1,26 @@
+package ca.qc.dawsoncollege.stockx.festockx.SQLite;
+
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.content.ClipData;
+
+import java.util.List;
+
+public class ItemNoteViewModel extends AndroidViewModel {
+    private noteRepository nRepository;
+    private LiveData<List<ItemNote>> listNotes;
+
+    public ItemNoteViewModel(Application application){
+        super(application);
+        nRepository = new noteRepository(application);
+        listNotes = nRepository.getAllNotes();
+    }
+    public void insert(ItemNote itemNote){
+        nRepository.insert(itemNote);
+    }
+
+    LiveData<List<ItemNote>> getAllNotes(){
+        return listNotes;
+    }
+}

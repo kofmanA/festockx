@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {ItemNote.class},version = 1)
+@Database(entities = {ItemNote.class},version = 1,exportSchema = false)
 public abstract class noteRoomDatabase extends RoomDatabase {
     public abstract ItemNoteDAO itemNodeDAO();
     private static volatile noteRoomDatabase INSTANCE;
