@@ -21,12 +21,13 @@
         <item>BTC</item>
     </string-array>
     <string name="save">Save</string>
-    <string name="saved">Settings Saved</string>
+    <string name="saved">Saved</string>
     <string name="invalidEmail">Your email is invalid. Please try again.</string>
     <string name="backSettingTitle">Unsaved Settings</string>
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="noNotes">No notes available</string>
-
+    <string name="newNoteHint"> Enter your note here</string>
+    <string name="emptyNoteError">Empty note can\'t be saved!</string>
 </resources>

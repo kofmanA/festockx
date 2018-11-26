@@ -20,7 +20,7 @@ public class ItemNoteViewModel extends AndroidViewModel {
         nRepository.insert(itemNote);
     }
 
-    LiveData<List<ItemNote>> getAllNotes(){
+    public LiveData<List<ItemNote>> getAllNotes(){
         return listNotes;
     }
 }
