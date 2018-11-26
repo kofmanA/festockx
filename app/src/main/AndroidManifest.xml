@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.qc.dawsoncollege.stockx.festockx">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,19 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity">
+        <activity android:name=".StockActivity" />
+        <activity android:name=".StockNumberSelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StockActivity" />
-        <activity android:name=".StockNumberSelectActivity" />
-        <activity android:name=".TickerEnterActivity" />
         <activity
             android:name=".TickerInputActivity"
-            android:label="@string/title_activity_ticker_input"></activity>
+            android:label="@string/title_activity_ticker_input" />
+        <activity
+            android:name=".ShowTickerInfoActivity"
+            android:label="@string/title_activity_show_ticker_info" />
+        <activity android:name=".TickerInfoActivity"></activity>
     </application>
 
 </manifest>

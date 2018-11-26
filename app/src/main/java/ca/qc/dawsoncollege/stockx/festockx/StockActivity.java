@@ -1,9 +1,10 @@
 package ca.qc.dawsoncollege.stockx.festockx;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class StockActivity extends AppCompatActivity {
+public class StockActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
