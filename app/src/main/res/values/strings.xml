@@ -14,4 +14,11 @@
     <string name="simondes">My name is Simon Guevara-Ponce and I\'m a Computer Science student at Dawson College.</string>
     <string name="zhides">Hi! I want to be a developer and I dream about going to space!</string>
     <string name="alexdes">I\'m Alex and I love music and app development.</string>
+    
+    <string name="forex">Foreign Currency Exchange</string>
+    <string name="amount">Amount</string>
+    <string name="fromcurrency">From</string>
+    <string name="tocurrency">To</string>
+    <string name="convert">Convert</string>
+
 </resources>
