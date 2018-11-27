@@ -9,4 +9,9 @@
     <string name="simon">Simon Guevara</string>
     <string name="zhijie">Zhijie Cao</string>
     <string name="alex">Alex Kofman</string>
+
+    <string name="feldes">Hello! I\'m Bulgarian and I love to develop apps for many people to enjoy!</string>
+    <string name="simondes">My name is Simon Guevara-Ponce and I\'m a Computer Science student at Dawson College.</string>
+    <string name="zhides">Hi! I want to be a developer and I dream about going to space!</string>
+    <string name="alexdes">I\'m Alex and I love music and app development.</string>
 </resources>

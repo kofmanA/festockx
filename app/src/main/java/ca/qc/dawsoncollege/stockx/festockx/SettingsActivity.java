@@ -3,7 +3,7 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
