@@ -58,4 +58,14 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
         notifyDataSetChanged();
    }
 
+   public void removeItem(int pos){
+        lNotes.remove(pos);
+        notifyDataSetChanged();
+   }
+
+   public void restoreItem(ItemNote note, int pos){
+       lNotes.add(pos,note);
+       notifyDataSetChanged();
+   }
+
 }

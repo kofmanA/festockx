@@ -20,6 +20,13 @@ public class ItemNoteViewModel extends AndroidViewModel {
         nRepository.insert(itemNote);
     }
 
+    public void delete(int pos){
+        nRepository.delete(listNotes.getValue().get(pos));
+    }
+
+    public ItemNote getNote(int pos){ return listNotes.getValue().get(pos);}
+
+
     public LiveData<List<ItemNote>> getAllNotes(){
         return listNotes;
     }
