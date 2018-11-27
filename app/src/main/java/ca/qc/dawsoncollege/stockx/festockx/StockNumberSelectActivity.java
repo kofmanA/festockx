@@ -76,7 +76,6 @@ public class StockNumberSelectActivity extends Activity {
         List<String> tickers = getListOfTickers();
         Intent i = new Intent(this, ShowTickerInfoActivity.class);
         i.putStringArrayListExtra("tickers", (ArrayList<String>) tickers);
-        Log.d("Tickers submitted: ",tickers.toString() + "");
         startActivity(i);
     }
 

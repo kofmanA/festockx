@@ -37,27 +37,36 @@ public class ShowTickerInfoActivity extends Activity {
     private int BUFFER = 1024;
     private String TAG = "Exception";
     List<TickerStock> tickersInfo = new ArrayList<TickerStock>();
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ticker_info);
         if(getIntent().hasExtra("tickers")){
+            //Retreive tickers sent from the user input
             tickers = getIntent().getExtras().getStringArrayList("tickers");
-            Log.d("TICKERS:",tickers.toString());
             getAllStockInfo();
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getAllStockInfo(){
         String beginningUrl = "https://www.worldtradingdata.com/api/v1/stock?symbol=";
-        //Comma separated string of tickers for the URL
-        String tickersCommaSeparated = String.join(",", tickers).toUpperCase();
-        String endUrl = "&api_token=bk3gi7ZJHWLyeG4QhI2ruwRqLsZCLhNCIpn0qYivknYwL5I3p8emaJD5ABwo";
+        /*Comma separated string of tickers for the URL.
+         *Example: If the user entered AAPL and MSFT in their ticker boxes, the tickerCommaSeparated String would be AAPL,MSFT
+         */
+        String tickersCommaSeparated = "";
+        for(int i = 0; i < tickers.size();i++){
+            if(i == tickers.size() - 1){
+                tickersCommaSeparated += tickers.get(i).toUpperCase();
+            } else {
+                tickersCommaSeparated += tickers.get(i).toUpperCase() + ",";
+            }
+        }
+        //Concatenating the query token
+        String endToken = "&api_token=bk3gi7ZJHWLyeG4QhI2ruwRqLsZCLhNCIpn0qYivknYwL5I3p8emaJD5ABwo";
 
-        String fullUrl = beginningUrl + tickersCommaSeparated + endUrl;
-        Log.d("fullUrl: ",fullUrl + "");
+        String fullUrl = beginningUrl + tickersCommaSeparated + endToken;
+
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if(netInfo != null && netInfo.isConnected()){
@@ -72,22 +81,42 @@ public class ShowTickerInfoActivity extends Activity {
             try {
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
-                JSONArray stockObject = jsonObj.getJSONArray("data");
-
-                String tickerName, companyName, currentPrice, currencyType, stockExchange, dayChange, changePct;
-                for(int i = 0 ; i < stockObject.length(); i++){
-                    JSONObject obj = stockObject.getJSONObject(i);
-                    tickerName = obj.getString("symbol");
-                    companyName = obj.getString("name");
-                    currentPrice = obj.getString("price");
-                    currencyType = obj.getString("currency");
-                    stockExchange = obj.getString("stock_exchange_short");
-                    dayChange = obj.getString("day_change");
-                    changePct = obj.getString("change_pct");
-                    TickerStock ts = new TickerStock(tickerName,companyName,currentPrice,currencyType,stockExchange,dayChange,changePct);
+                //data object indicates that querying the API with the ticker
+                if(!jsonObj.has("data")){
+                    //Create a ticker stock with all info indicating that it isn't a valid ticker
+                    //If time, will find a way to costruct a better looking error message that the ticker is not found
+                    TickerStock ts = new TickerStock();
+                    ts.setTickerName("This ticker is not in the exchange");
+                    ts.setCompanyName("This ticker is not in the exchange");
+                    ts.setCurrencyType("This ticker is not in the exchange");
+                    ts.setDayChange("This ticker is not in the exchange");
+                    ts.setPrice("This ticker is not in the exchange");
+                    ts.setStockExchange("This ticker is not in the exchange");
+                    ts.setChangePct("This ticker is not in the exchange");
                     tickersInfo.add(ts);
                 }
-                //Adapter
+                else {
+                    //All of the data of the stock ticker is contained in the data object in the API
+                    JSONArray stockObject = jsonObj.getJSONArray("data");
+
+                    String tickerName, companyName, currentPrice, currencyType, stockExchange, dayChange, changePct;
+                    //Go through each ticker symbol
+                    for (int i = 0; i < stockObject.length(); i++) {
+                        JSONObject obj = stockObject.getJSONObject(i);
+
+                        tickerName = obj.getString("symbol");
+                        companyName = obj.getString("name");
+                        currentPrice = obj.getString("price");
+                        currencyType = obj.getString("currency");
+                        stockExchange = obj.getString("stock_exchange_short");
+                        dayChange = obj.getString("day_change");
+                        changePct = obj.getString("change_pct");
+                        //Create new TickerStock object
+                        TickerStock ts = new TickerStock(tickerName, companyName, currentPrice, currencyType, stockExchange, dayChange, changePct);
+                        tickersInfo.add(ts);
+                    }
+                }
+                //Pass retreived ticker info objects into the adapter
                 tickerInfoList = (ListView) findViewById(R.id.allTickers);
                 tickerInfoList.setAdapter(new TickerInfoDisplayAdapter(ShowTickerInfoActivity.this, tickersInfo));
             } catch (Exception e) {
