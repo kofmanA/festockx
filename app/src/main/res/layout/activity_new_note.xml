@@ -11,6 +11,9 @@
         android:fontFamily="sans-serif-light"
         android:hint="@string/newNoteHint"
         android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
         android:textSize="18sp" />
 
     <Button

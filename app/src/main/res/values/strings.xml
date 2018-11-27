@@ -30,4 +30,5 @@
     <string name="noNotes">No notes available</string>
     <string name="newNoteHint"> Enter your note here</string>
     <string name="emptyNoteError">Empty note can\'t be saved!</string>
+    <string name="noteNotSaved">Note not saved!</string>
 </resources>

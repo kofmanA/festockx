@@ -3,12 +3,15 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class NewNoteActivity extends Activity {
+import static android.app.Activity.RESULT_CANCELED;
+
+public class NewNoteActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     private EditText newNoteET;
 
@@ -23,7 +26,6 @@ public class NewNoteActivity extends Activity {
                 Intent replyIntent = new Intent();
                 if (TextUtils.isEmpty(newNoteET.getText().toString())){
                     setResult(RESULT_CANCELED,replyIntent);
-
                 }
                 else{
                     String note = newNoteET.getText().toString();

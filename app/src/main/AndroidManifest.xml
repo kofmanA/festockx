@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".NewNoteActivity"></activity>
+
     </application>
 
 </manifest>

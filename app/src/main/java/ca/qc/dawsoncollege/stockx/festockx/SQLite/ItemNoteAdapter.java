@@ -53,4 +53,9 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
         return 0;
     }
 
+   public void setNotes(List<ItemNote> notes){
+        this.lNotes = notes;
+        notifyDataSetChanged();
+   }
+
 }
