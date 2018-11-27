@@ -9,6 +9,11 @@ import android.view.MenuItem;
 
 public class MenuActivity extends Activity {
 
+    /**
+     * creates the options menu
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -17,6 +22,11 @@ public class MenuActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * detects which element in the menu was clicked and performs the appropriate action for what what selected
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
