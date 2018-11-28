@@ -54,7 +54,7 @@ public class AboutActivity extends MenuActivity{
      * @return
      */
     private String getDescription (int id) {
-        String description = "Problem getting description";
+        String description = getString(R.string.probdes);
         switch(id){
             case R.id.zhiimg:
             case R.id.zhitv :
@@ -78,7 +78,7 @@ public class AboutActivity extends MenuActivity{
      * @return
      */
     private String getName(int id){
-        String name = "Problem getting name";
+        String name = getString(R.string.probname);
         switch(id){
             case R.id.zhiimg:
             case R.id.zhitv :
