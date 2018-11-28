@@ -27,5 +27,8 @@
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-
+    <string name="hints">Hint</string>
+    <string name="source">Source</string>
+    <string name="loading">loading...</string>
+    <string name="hint">Press to load another hint</string>
 </resources>
