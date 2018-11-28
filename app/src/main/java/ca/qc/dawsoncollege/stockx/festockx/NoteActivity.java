@@ -21,7 +21,7 @@ import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.*;
 
-public class NoteActivity extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity  {
     private ItemNoteViewModel INVModel;
     private CoordinatorLayout coordinatorLayout;
     private ItemNoteAdapter adapter;
@@ -71,8 +71,9 @@ public class NoteActivity extends AppCompatActivity {
         startActivityForResult(intent, NEW_NOTE_ACTIVITY_REQUEST_CODE);
     }
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {

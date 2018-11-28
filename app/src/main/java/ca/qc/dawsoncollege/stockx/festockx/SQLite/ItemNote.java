@@ -17,7 +17,8 @@ public class ItemNote {
     @ColumnInfo(name = "note")
     private String note;
 
-
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     public ItemNote(@NonNull String note){
         this.note=note;
     }

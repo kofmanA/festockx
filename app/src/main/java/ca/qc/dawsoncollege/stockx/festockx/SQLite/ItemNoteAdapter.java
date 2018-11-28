@@ -33,6 +33,7 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = nInflater.inflate(R.layout.recyclerview_item, parent, false);
         return new ItemViewHolder(itemView);
+
     }
 
     @Override
@@ -67,5 +68,11 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
        lNotes.add(pos,note);
        notifyDataSetChanged();
    }
+
+    public void onItemClick(View view, int position) {
+        lNotes.remove(position);
+        notifyDataSetChanged();
+    }
+
 
 }
