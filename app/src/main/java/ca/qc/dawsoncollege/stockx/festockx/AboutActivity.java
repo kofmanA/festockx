@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Felicia
+ */
 public class AboutActivity extends MenuActivity{
 
     @Override
@@ -91,5 +94,14 @@ public class AboutActivity extends MenuActivity{
                 return "Alex Kofman";
         }
         return name;
+    }
+
+    /**
+     * stack management: close this activity when another is opened on top to avoid the stack become too big
+     */
+    @Override
+    protected void onStop(){
+        super.onStop();
+        finish();
     }
 }
