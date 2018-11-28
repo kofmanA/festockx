@@ -21,7 +21,7 @@ import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.*;
 
-public class NoteActivity extends AppCompatActivity  {
+public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.ItemClickListener {
     private ItemNoteViewModel INVModel;
     private CoordinatorLayout coordinatorLayout;
     private ItemNoteAdapter adapter;
@@ -36,6 +36,8 @@ public class NoteActivity extends AppCompatActivity  {
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
          adapter = new ItemNoteAdapter(this);
+         recyclerView.setOnClickListener(this);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         INVModel = ViewModelProviders.of(this).get(ItemNoteViewModel.class);
@@ -47,6 +49,14 @@ public class NoteActivity extends AppCompatActivity  {
         });
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
     }
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+        //Update stuff
+        adapter.notifyDataSetChanged();
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent i) {
         super.onActivityResult(requestCode, resultCode, i);
@@ -117,4 +127,6 @@ public class NoteActivity extends AppCompatActivity  {
 
         }
     };
+
+
 }

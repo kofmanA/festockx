@@ -2,32 +2,58 @@ package ca.qc.dawsoncollege.stockx.festockx.SQLite;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemViewHolder> {
-    class ItemViewHolder  extends RecyclerView.ViewHolder{
+    private ItemClickListener mClickListener;
+
+
+    class ItemViewHolder  extends RecyclerView.ViewHolder implements ViewStub.OnClickListener{
         private final TextView itemNoteView;
 
         private ItemViewHolder(View itemView){
             super(itemView);
             itemNoteView = itemView.findViewById(R.id.textView);
+            itemView.setOnClickListener(this);
         }
 
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 
     private final LayoutInflater nInflater;
     private List<ItemNote> lNotes;
+    private ItemClickListener onItemClickListener;
+
 
     public ItemNoteAdapter(Context context){
         nInflater = LayoutInflater.from(context);
+
     }
+
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -69,10 +95,9 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
        notifyDataSetChanged();
    }
 
-    public void onItemClick(View view, int position) {
-        lNotes.remove(position);
-        notifyDataSetChanged();
-    }
+
+
+
 
 
 }
