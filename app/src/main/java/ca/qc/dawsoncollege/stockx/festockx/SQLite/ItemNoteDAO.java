@@ -22,5 +22,7 @@ public interface ItemNoteDAO {
     @Query("SELECT * FROM itemNote_table")
     LiveData<List<ItemNote>> getAllNotes();
 
+    @Query("UPDATE itemNote_table SET note = :message WHERE id = :id")
+    public void updateNote(int id, String message);
 
 }

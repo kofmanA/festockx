@@ -45,9 +45,6 @@ public abstract class noteRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... params) {
-            inDAO.deleteAll();
-            ItemNote in = new ItemNote("Reminder to call John");
-            inDAO.insert(in);
             return null;
         }
     }

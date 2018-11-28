@@ -1,6 +1,7 @@
 package ca.qc.dawsoncollege.stockx.festockx.SQLite;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,52 +13,61 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ca.qc.dawsoncollege.stockx.festockx.NewNoteActivity;
+import ca.qc.dawsoncollege.stockx.festockx.NoteActivity;
+import ca.qc.dawsoncollege.stockx.festockx.NoteItemActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemViewHolder> {
-    private ItemClickListener mClickListener;
 
 
-    class ItemViewHolder  extends RecyclerView.ViewHolder implements ViewStub.OnClickListener{
+    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView itemNoteView;
 
         private ItemViewHolder(View itemView){
             super(itemView);
             itemNoteView = itemView.findViewById(R.id.textView);
+
             itemView.setOnClickListener(this);
         }
-
-
         @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        public void onClick(View v) {
+            itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
         }
-
-
-    }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 
     private final LayoutInflater nInflater;
+    private static RecyclerViewClickListener itemListener;
     private List<ItemNote> lNotes;
-    private ItemClickListener onItemClickListener;
 
+    public interface RecyclerViewClickListener {
+        public void recyclerViewListClicked(View v, int position);
+    }
 
     public ItemNoteAdapter(Context context){
         nInflater = LayoutInflater.from(context);
 
     }
 
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+    public void setRecyclerClick(RecyclerViewClickListener RVCL){
+        this.itemListener = RVCL;
     }
-
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = nInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View image = itemView.findViewById(R.id.imageNote);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NoteItemActivity.class);
+                TextView TV = itemView.findViewById(R.id.textView);
+                intent.putExtra("note",TV.getText());
+                v.getContext().startActivity(intent);
+            }
+        });
         return new ItemViewHolder(itemView);
 
     }
@@ -66,7 +76,12 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         if (lNotes != null) {
             ItemNote current = lNotes.get(position);
-            holder.itemNoteView.setText(current.getNote());
+            String note = current.getNote();
+            if(note.length() >40){
+                note = note.substring(0,40)+"...";
+            }
+
+            holder.itemNoteView.setText(note);
         } else {
             holder.itemNoteView.setText(R.string.noNotes);
         }

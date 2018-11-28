@@ -26,6 +26,7 @@ public class ItemNoteViewModel extends AndroidViewModel {
 
     public ItemNote getNote(int pos){ return listNotes.getValue().get(pos);}
 
+    public void updateNote(String[] data){nRepository.updateNote(data);}
 
     public LiveData<List<ItemNote>> getAllNotes(){
         return listNotes;

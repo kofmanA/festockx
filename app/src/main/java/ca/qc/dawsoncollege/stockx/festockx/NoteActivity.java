@@ -2,6 +2,7 @@ package ca.qc.dawsoncollege.stockx.festockx;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,19 +10,23 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.*;
 
-public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.ItemClickListener {
+public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.RecyclerViewClickListener{
     private ItemNoteViewModel INVModel;
     private CoordinatorLayout coordinatorLayout;
     private ItemNoteAdapter adapter;
@@ -36,8 +41,7 @@ public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
          adapter = new ItemNoteAdapter(this);
-         recyclerView.setOnClickListener(this);
-
+        adapter.setRecyclerClick(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         INVModel = ViewModelProviders.of(this).get(ItemNoteViewModel.class);
@@ -47,16 +51,44 @@ public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.
                 adapter.setNotes(itemNotes);
             }
         });
+
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
     }
 
-
     @Override
-    public void onItemClick(View view, int position) {
-        //Update stuff
-        adapter.notifyDataSetChanged();
-    }
+    public void recyclerViewListClicked(View v, int position) {
+        final String[] editedNote = new String[1];
 
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompt_updatenote, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+        userInput.setText(INVModel.getNote(position).getNote());
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                editedNote[0] = userInput.getText().toString();
+                                final String[] data = {editedNote[0] + ';' + INVModel.getNote(position).getId()};
+                                INVModel.updateNote(data[0].split(";"));
+                                adapter.setNotes(INVModel.getAllNotes().getValue());
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent i) {
         super.onActivityResult(requestCode, resultCode, i);
@@ -90,6 +122,8 @@ public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.
             return false;
         }
 
+
+
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
             final int noteid = viewHolder.getAdapterPosition();
@@ -110,19 +144,6 @@ public class NoteActivity extends AppCompatActivity  implements ItemNoteAdapter.
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);
-
-            snackbar.addCallback(new Snackbar.Callback() {
-
-                                     @Override
-                                     public void onDismissed(Snackbar snackbar, int event) {
-                                         Log.i("HELLO","HIT ");
-                                         if(!undo[0]) {
-                                             Log.i("HELLO"," " + noteid);
-
-                                         }
-                                     }
-                                 });
-
             snackbar.show();
 
         }
