@@ -51,25 +51,32 @@
             android:id="@+id/from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="60dp">
+            android:gravity="center">
 
         </Spinner>
         <Spinner
             android:id="@+id/to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="30dp">
+            android:gravity="center">
 
         </Spinner>
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/convert"
+        android:onClick="calculate"/>
 
     <TextView
         android:id="@+id/converted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
         android:textSize="35dp"/>
 
 </LinearLayout>

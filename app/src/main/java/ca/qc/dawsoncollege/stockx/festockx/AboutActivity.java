@@ -33,8 +33,7 @@ public class AboutActivity extends MenuActivity{
         description = getDescription(id);
         name = getName(id);
 
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(name)
                 .setMessage(description)
