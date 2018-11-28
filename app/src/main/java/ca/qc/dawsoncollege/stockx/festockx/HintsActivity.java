@@ -58,7 +58,9 @@ public class HintsActivity extends Activity {
     }
 
     /**
-     * Signs the user in.
+     * Signs the user in
+     * and launches fetchDatabaseInfo() when the user logs in successfully
+     * @author Zhi Jie Cao
      */
     protected void signIn(){
         mAuth.signInWithEmailAndPassword("zhijiec99@hotmail.com", "android")
@@ -66,7 +68,6 @@ public class HintsActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
                             fetchDatabaseInfo();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -78,12 +79,15 @@ public class HintsActivity extends Activity {
                 });
     }
 
+    /**
+     * Fetches the info from the Database and display
+     * @author Zhi Jie Cao
+     */
     protected void fetchDatabaseInfo(){
         DatabaseReference ref = database.getReference("hints");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getKey();
                 Log.d(TAG ,"Children Count: " + dataSnapshot.getChildrenCount());
                 hints = new ArrayList<>();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
@@ -109,6 +113,10 @@ public class HintsActivity extends Activity {
         });
     }
 
+    /**
+     * Displays the hint object in the activity.
+     * @param hint
+     */
     protected void displayData(final Hint hint){
         Log.d(TAG, "DISPLAYING: " +  hint.text);
         TextView text = findViewById(R.id.hintText);
