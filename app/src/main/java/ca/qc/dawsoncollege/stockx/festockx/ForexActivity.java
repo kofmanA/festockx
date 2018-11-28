@@ -10,11 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -22,17 +19,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import static android.content.ContentValues.TAG;
 
+/**
+ * @author Felicia
+ */
 public class ForexActivity extends MenuActivity {
 
     private JSONObject json;
@@ -44,19 +39,21 @@ public class ForexActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forex);
 
+        //this call takes care of filling up the spinners, that's why it is in onCreate
         new RetrieveExchangeRates().execute("https://api.exchangeratesapi.io/latest");
     }
 
-    //get amount entered -- show error message if button pressed but nothing selected or stuff missing
-    //get from choice
-    //get to choice
-    //make appropriate call to api to get conversion information
-
-    //calculate
+    /**
+     * called when convert button is pressed. It collect the selected items as strings from the spinners and makes another call to the api but using the select FROM as a base, retrieves
+     * TO value from the jason object with the new base and multiplies it by the amount to get the foreign currency amount.
+     * Once calculated, the converted amount is  displayed on the ui
+     * @param view
+     */
     public void convert(View view) {
         fromItem = ((Spinner) findViewById(R.id.from)).getSelectedItem().toString();
         toItem = ((Spinner) findViewById(R.id.to)).getSelectedItem().toString();
 
+        //anonymous AsyncTask takes care of retrieving the rate required, retreives the remaining needed views, converts the amount and displays it
         new AsyncTask<String, Void, String>() {
 
             @Override
@@ -99,10 +96,9 @@ public class ForexActivity extends MenuActivity {
         }.execute("https://api.exchangeratesapi.io/latest?base=" + fromItem);
     }
 
-
-    //display
-
-
+    /**
+     * nested AsyncTaks takes care of retrieving the currencies available in the api and fills up two spinners on the ui to allow the user to choose from and to currencies
+     */
     private class RetrieveExchangeRates extends AsyncTask<String, Void, String> {
 
         @Override
@@ -149,7 +145,14 @@ public class ForexActivity extends MenuActivity {
 
     }
 
-
+    /**
+     * opens connections, gets an inputstream from the response and send it to readIt() to get the information needed form the resposne
+     * finally closes connections when they've been opened
+     *
+     * @param urlParam
+     * @return
+     * @throws IOException
+     */
     private String callUrl(String urlParam) throws IOException {
         HttpURLConnection connection = null;
         InputStream instream = null;
@@ -197,6 +200,14 @@ public class ForexActivity extends MenuActivity {
         return null;
     }
 
+    /**
+     * 
+     * @author Patricia Campbell
+     * @param is
+     * @return
+     * @throws IOException
+     * @throws UnsupportedEncodingException
+     */
     public String readIt(InputStream is) throws IOException, UnsupportedEncodingException {
         final int BUFFER = 1024;
         int bytesRead;
