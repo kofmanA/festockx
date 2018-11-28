@@ -201,7 +201,7 @@ public class ForexActivity extends MenuActivity {
     }
 
     /**
-     * 
+     *
      * @author Patricia Campbell
      * @param is
      * @return
