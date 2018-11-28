@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -50,60 +53,82 @@ public class ForexActivity extends MenuActivity {
     //make appropriate call to api to get conversion information
 
     //calculate
-    public double convert (View view){
-        fromItem = ((Spinner)findViewById(R.id.from)).getSelectedItem().toString();
-        toItem = ((Spinner)findViewById(R.id.to)).getSelectedItem().toString();
+    public void convert(View view) {
+        fromItem = ((Spinner) findViewById(R.id.from)).getSelectedItem().toString();
+        toItem = ((Spinner) findViewById(R.id.to)).getSelectedItem().toString();
 
-        new AsyncTask<String, Void, String>(){
+        new AsyncTask<String, Void, String>() {
 
             @Override
             protected String doInBackground(String... url) {
                 try {
                     return callUrl(url[0]);
                 } catch (IOException e) {
-                    Log.e(TAG, "exception thrown by download" );
+                    Log.e(TAG, "exception thrown by download");
                     return "Unable to retrieve web page. URL may be invalid.";
                 }
             }
 
             @Override
             protected void onPostExecute(String result) {
+                try {
+                    if (result == null) {
+                        return;
+                    }
+                    Log.d("result: ", result + "");
+                    json = new JSONObject(result);
 
+                    if (json.has("rates")) {
+                        double rate;
+                        JSONObject currenciesObject = json.getJSONObject("rates");
+                        rate = currenciesObject.getDouble(toItem);
+
+                        double amountToConvert = Double.parseDouble(((EditText)findViewById(R.id.amount)).getText().toString());
+
+                        double convertedAmount = Math.round(rate * amountToConvert);
+
+                        TextView tv = (TextView)findViewById(R.id.converted);
+                        tv.setText(""+convertedAmount + " " + toItem);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        };
 
 
+        }.execute("https://api.exchangeratesapi.io/latest?base=" + fromItem);
     }
+
 
     //display
 
 
-    private class RetrieveExchangeRates extends AsyncTask<String,Void,String> {
+    private class RetrieveExchangeRates extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... url) {
             try {
                 return callUrl(url[0]);
             } catch (IOException e) {
-                Log.e(TAG, "exception thrown by download" );
+                Log.e(TAG, "exception thrown by download");
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
 
         protected void onPostExecute(String result) {
             try {
-                if(result == null){
+                if (result == null) {
                     return;
                 }
                 Log.d("result: ", result + "");
                 json = new JSONObject(result);
 
-                if(json.has("rates")){
+                if (json.has("rates")) {
                     JSONObject currenciesObject = json.getJSONObject("rates");
                     Iterator<String> currenciesIterator = currenciesObject.keys();
                     List<String> currencies = new ArrayList<>();
 
-                    while(currenciesIterator.hasNext()){
+                    while (currenciesIterator.hasNext()) {
                         currencies.add(currenciesIterator.next());
                     }
 
@@ -126,39 +151,51 @@ public class ForexActivity extends MenuActivity {
 
 
     private String callUrl(String urlParam) throws IOException {
-        URL url = new URL(urlParam); //HTTP/1.1
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpURLConnection connection;
+        InputStream instream;
 
-        connection.setReadTimeout(5000);
-        connection.setConnectTimeout(5000);
-        connection.setRequestMethod("GET");
-        connection.setDoInput(true);
-        connection.connect  ();
+        try {
+            URL url = new URL(urlParam); //HTTP/1.1
+            connection = (HttpURLConnection) url.openConnection();
 
-        int response = connection.getResponseCode();
-        if (response == HttpURLConnection.HTTP_OK) {
-            InputStream instream = connection.getInputStream();
+            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(5000);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.connect();
 
-            return readIt(instream);
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK) {
+                instream = connection.getInputStream();
+                return readIt(instream);
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            builder.setTitle(R.string.error)
-                    .setMessage(R.string.errmsg)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .show();
+                builder.setTitle(R.string.error)
+                        .setMessage(R.string.errmsg)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        }
+        catch (Exception e){
+            Log.e("Error", e.toString());
+        }
+        finally {
+            if(instream != null && connection != null) {
+                instream.close();
+                connection.disconnect();
+            }
         }
 
-        connection.disconnect();
 
         return null;
 
     }
 
-    public String readIt(InputStream is) throws IOException,UnsupportedEncodingException {
+    public String readIt(InputStream is) throws IOException, UnsupportedEncodingException {
         final int BUFFER = 1024;
         int bytesRead;
         int totalRead = 0;
@@ -178,5 +215,6 @@ public class ForexActivity extends MenuActivity {
         writer.flush();
         return new String(byteArrayOutputStream.toString());
     }
-
 }
+
+

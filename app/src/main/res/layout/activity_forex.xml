@@ -17,6 +17,7 @@
         android:textSize="40sp"/>
 
     <EditText
+        android:id="@+id/amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -72,7 +73,8 @@
         android:layout_marginTop="30dp"
         android:text="@string/convert"
         android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_marginRight="100dp"
+        android:onClick="convert"/>
 
     <TextView
         android:id="@+id/converted"
