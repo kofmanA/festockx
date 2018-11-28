@@ -82,7 +82,7 @@ public class ForexActivity extends MenuActivity {
 
                         double amountToConvert = Double.parseDouble(((EditText)findViewById(R.id.amount)).getText().toString());
 
-                        double convertedAmount = Math.round(rate * amountToConvert);
+                        double convertedAmount = Math.round(rate * amountToConvert * 100)/100;
 
                         TextView tv = (TextView)findViewById(R.id.converted);
                         tv.setText(""+convertedAmount + " " + toItem);
