@@ -151,8 +151,8 @@ public class ForexActivity extends MenuActivity {
 
 
     private String callUrl(String urlParam) throws IOException {
-        HttpURLConnection connection;
-        InputStream instream;
+        HttpURLConnection connection = null;
+        InputStream instream = null;
 
         try {
             URL url = new URL(urlParam); //HTTP/1.1
@@ -184,15 +184,17 @@ public class ForexActivity extends MenuActivity {
             Log.e("Error", e.toString());
         }
         finally {
-            if(instream != null && connection != null) {
-                instream.close();
-                connection.disconnect();
+            try {
+                if (instream != null && connection != null) {
+                    instream.close();
+                    connection.disconnect();
+                }
+            }
+            catch(Exception e){
+                Log.e("Error", "problem closing input stream or html connection");
             }
         }
-
-
         return null;
-
     }
 
     public String readIt(InputStream is) throws IOException, UnsupportedEncodingException {
