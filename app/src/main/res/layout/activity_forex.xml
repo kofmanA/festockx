@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/amount"
+        android:hint="@string/amount"
         android:textSize="25sp"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
