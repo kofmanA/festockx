@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class NoteItemActivity extends Activity {
+
+    /**Summary: Activit that displays the full note     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

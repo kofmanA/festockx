@@ -64,7 +64,8 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NoteItemActivity.class);
                 TextView TV = itemView.findViewById(R.id.textView);
-                intent.putExtra("note",TV.getText());
+                intent.putExtra("note",TV.getTag().toString());
+                //The explanation of why I use the tag and not the getText() is in the method below
                 v.getContext().startActivity(intent);
             }
         });
@@ -77,6 +78,10 @@ public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemVi
         if (lNotes != null) {
             ItemNote current = lNotes.get(position);
             String note = current.getNote();
+            holder.itemNoteView.setTag(note);
+            //I'm kind of cheating here. Since I only have access to the textview in my onCreateViewHolder
+            //and that that textview is already being cropped here, I need a way to save the full note.
+            //So I use the tag attribute so secretely hide the non-cropped message.
             if(note.length() >40){
                 note = note.substring(0,40)+"...";
             }

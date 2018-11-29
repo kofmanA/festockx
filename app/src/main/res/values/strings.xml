@@ -32,4 +32,7 @@
     <string name="emptyNoteError">Empty note can\'t be saved!</string>
     <string name="noteNotSaved">Note not saved!</string>
     <string name="updateNote">Edit your note:</string>
+    <string name="noteTitle">Your notes:</string>
+    <string name="Undo">Undo</string>
+    <string name="noteDeleted"> Note Deleted</string>
 </resources>

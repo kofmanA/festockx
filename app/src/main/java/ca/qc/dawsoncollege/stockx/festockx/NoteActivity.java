@@ -39,11 +39,14 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
+        getSupportActionBar().setTitle(R.string.noteTitle);
+
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-         adapter = new ItemNoteAdapter(this);
+        adapter = new ItemNoteAdapter(this);
         adapter.setRecyclerClick(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         INVModel = ViewModelProviders.of(this).get(ItemNoteViewModel.class);
         INVModel.getAllNotes().observe(this, new Observer<List<ItemNote>>() {
             @Override
@@ -51,10 +54,17 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
                 adapter.setNotes(itemNotes);
             }
         });
-
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
     }
 
+
+    /**Summary: On click event for each note. Creates a dialog with the edit text. The Edit text is attached to a
+     * positive and negative button. It calls the view model update note method with the new note String
+     * if the save button is triggered.
+     *
+     * @param v
+     * @param position: position of the note picked
+     */
     @Override
     public void recyclerViewListClicked(View v, int position) {
         final String[] editedNote = new String[1];
@@ -63,23 +73,22 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
         View promptsView = li.inflate(R.layout.prompt_updatenote, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptsView);
+
         final EditText userInput = (EditText) promptsView
                 .findViewById(R.id.editTextDialogUserInput);
         userInput.setText(INVModel.getNote(position).getNote());
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("OK",
+                .setPositiveButton(R.string.save,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
-                                // get user input and set it to result
-                                // edit text
                                 editedNote[0] = userInput.getText().toString();
                                 final String[] data = {editedNote[0] + ';' + INVModel.getNote(position).getId()};
                                 INVModel.updateNote(data[0].split(";"));
                                 adapter.setNotes(INVModel.getAllNotes().getValue());
                             }
                         })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(R.string.noteNotSaved,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();
@@ -90,6 +99,12 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
         alertDialog.show();
     }
 
+    /**Summary: Once New Note Acticity is done, takes String and creates a new note.
+     * If note was empty or back button was pressed, pops up toast.
+     * @param requestCode
+     * @param resultCode
+     * @param i
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent i) {
         super.onActivityResult(requestCode, resultCode, i);
         if (requestCode == NEW_NOTE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -101,10 +116,7 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
     }
 
 
-    /**
-     * Creates a shared preferences editor and saves all the changes.
-     * First, checks if email entered is valid, if it's not, pops up a toast.
-     *
+    /**Summary: Launches new Note activity for result.
      * @param v
      * @author Simon Guevara-Ponce
      */
@@ -114,7 +126,9 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
     }
 
 
-
+    /**Summary: Everything that has to do with the Swipe delete,
+     *
+     */
     ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
         @Override
@@ -123,29 +137,26 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
         }
 
 
-
+        /**Summary: Once swipped, deletes note in the list and in the database. Before deleting
+         * it saves the ItemNote in case Undo is pressed.
+         * @param viewHolder
+         * @param i
+         */
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-            final int noteid = viewHolder.getAdapterPosition();
             final ItemNote noteBackup =  INVModel.getNote(viewHolder.getAdapterPosition());
             INVModel.delete(viewHolder.getAdapterPosition());
-
-            final boolean[] undo = new boolean[1];
-            undo[0] =false;
-                    // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout,  noteBackup.getNote() + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+                    .make(coordinatorLayout,  noteBackup.getNote() + R.string.noteDeleted, Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.Undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    undo[0] = true;
                     INVModel.insert(new ItemNote(noteBackup.getNote()));
-                    adapter.restoreItem(noteBackup, noteid);
+                    adapter.restoreItem(noteBackup, noteBackup.getId());
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
-
         }
     };
 

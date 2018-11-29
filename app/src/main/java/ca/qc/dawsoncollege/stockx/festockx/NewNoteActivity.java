@@ -16,6 +16,10 @@ public class NewNoteActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     private EditText newNoteET;
 
+    /**Summary: Basic activity that sends back information upon close     *
+     * @param savedInstanceState
+     * @author Simon Guevara-Ponce
+     */
     @Override
     public void onCreate(Bundle savedInstanceState ){
         super.onCreate(savedInstanceState);
