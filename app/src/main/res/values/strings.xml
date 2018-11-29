@@ -11,9 +11,9 @@
     <string name="currency">Preferred Currency:</string>
     <string name="pStockEx">Preferred Stock Exchange: </string>
     <string-array name="PSE">
-    <item>TSX</item>
-    <item>NYSE</item>
-    <item>NASDAQ</item>
+        <item>TSX</item>
+        <item>NYSE</item>
+        <item>NASDAQ</item>
     </string-array>
     <string-array name="CURR">
         <item>CAN</item>
@@ -31,4 +31,11 @@
     <string name="source">Source</string>
     <string name="loading">loading...</string>
     <string name="hint">Press to load another hint</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="creditCalculator">Credit Calculator</string>
+    <string name="hintButton">Financial Hints</string>
+    <string name="foreignExchange">Foreign Exchange</string>
+    <string name="noteButton">Notes</string>
+    <string name="stockQuote">Stock Quote</string>
+    <string name="practice">Practice Stocks</string>
 </resources>
