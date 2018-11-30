@@ -3,6 +3,9 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,60 +19,28 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class TickerInfoDisplayAdapter extends BaseAdapter {
+public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
     Context context;
     List<TickerStock> tickers;
-    private static LayoutInflater inflater = null;
+    private final String TAG = "call";
 
 
-    @Override
-    public Object getItem(int position){
-        //return
-        return position;
-    }
-
-    public TickerInfoDisplayAdapter(Activity showTickerInfoActivity, List<TickerStock> tickers){
-        context = showTickerInfoActivity;
+    public TickerInfoDisplayAdapter(Context context, List<TickerStock> tickers){
+        this.context = context;
         this.tickers = tickers;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType){
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_ticker_info,parent,false);
+        Holder holder = new Holder(view);
+        return holder;
     }
 
     @Override
-    //Replace with returning a real category count
-    public int getCount(){
-        return tickers.size();
-    }
-
-    public class Holder
-    {
-        TextView symbolName;
-        TextView companyName;
-        TextView currentPrice;
-        TextView currency;
-        TextView stockExchange;
-        TextView dayChange;
-        TextView changePct;
-    }
-
-    public View getView(final int position, View convertView, ViewGroup parent){
-        Holder holder = new Holder();
-        View tickerView;
-        tickerView = inflater.inflate(R.layout.activity_ticker_info, null);
-        holder.symbolName = (TextView) tickerView.findViewById(R.id.symbolDisplay);
-        holder.companyName = (TextView) tickerView.findViewById(R.id.nameDisplay);
-        holder.currentPrice = (TextView) tickerView.findViewById(R.id.priceDisplay);
-        holder.currency = (TextView) tickerView.findViewById(R.id.currencyDisplay);
-        holder.stockExchange = (TextView) tickerView.findViewById(R.id.stockExchangeDisplay);
-        holder.dayChange = (TextView) tickerView.findViewById(R.id.dayChangeDisplay);
-        holder.changePct = (TextView) tickerView.findViewById(R.id.changePercentDisplay);
-
+    public void onBindViewHolder(Holder holder, final int position) {
         TickerStock tickerStats = tickers.get(position);
+        Log.d(TAG,tickerStats.getTickerName());
         holder.symbolName.setText(tickerStats.getTickerName());
         holder.companyName.setText(tickerStats.getCompanyName());
         holder.currentPrice.setText(tickerStats.getPrice());
@@ -77,7 +48,32 @@ public class TickerInfoDisplayAdapter extends BaseAdapter {
         holder.stockExchange.setText(tickerStats.getStockExchange());
         holder.dayChange.setText(tickerStats.getDayChange());
         holder.changePct.setText(tickerStats.getChangePct());
-        Log.d("VALUE: ",tickerView + "");
-        return tickerView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return tickers.size();
+    }
+
+
+    public class Holder extends RecyclerView.ViewHolder {
+        TextView symbolName;
+        TextView companyName;
+        TextView currentPrice;
+        TextView currency;
+        TextView stockExchange;
+        TextView dayChange;
+        TextView changePct;
+
+        public Holder(View itemView) {
+            super(itemView);
+            symbolName = (TextView) itemView.findViewById(R.id.symbolDisplay);
+            companyName = (TextView) itemView.findViewById(R.id.nameDisplay);
+            currentPrice = (TextView) itemView.findViewById(R.id.priceDisplay);
+            currency = (TextView) itemView.findViewById(R.id.currencyDisplay);
+            stockExchange = (TextView) itemView.findViewById(R.id.stockExchangeDisplay);
+            dayChange = (TextView) itemView.findViewById(R.id.dayChangeDisplay);
+            changePct = (TextView) itemView.findViewById(R.id.changePercentDisplay);
+        }
     }
 }

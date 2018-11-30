@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -32,7 +34,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ShowTickerInfoActivity extends Activity {
 
     private JSONObject jsonObj;
-    ListView tickerInfoList;
+    RecyclerView tickerInfoList;
     List<String> tickers;
     private int BUFFER = 1024;
     private String TAG = "Exception";
@@ -62,6 +64,7 @@ public class ShowTickerInfoActivity extends Activity {
                 tickersCommaSeparated += tickers.get(i).toUpperCase() + ",";
             }
         }
+        Log.d("api tickers:",tickersCommaSeparated);
         //Concatenating the query token
         String endToken = "&api_token=bk3gi7ZJHWLyeG4QhI2ruwRqLsZCLhNCIpn0qYivknYwL5I3p8emaJD5ABwo";
 
@@ -117,8 +120,9 @@ public class ShowTickerInfoActivity extends Activity {
                     }
                 }
                 //Pass retreived ticker info objects into the adapter
-                tickerInfoList = (ListView) findViewById(R.id.allTickers);
+                tickerInfoList = (RecyclerView) findViewById(R.id.allTickers);
                 tickerInfoList.setAdapter(new TickerInfoDisplayAdapter(ShowTickerInfoActivity.this, tickersInfo));
+                tickerInfoList.setLayoutManager(new LinearLayoutManager(ShowTickerInfoActivity.this));
             } catch (Exception e) {
                 e.printStackTrace();
             }

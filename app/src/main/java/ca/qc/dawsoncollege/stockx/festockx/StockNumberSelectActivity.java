@@ -93,7 +93,9 @@ public class StockNumberSelectActivity extends Activity {
                 EditText content = (EditText) child.getChildAt(0);
                 tickers.add(content.getText().toString());
             }
+
         }
+        Log.d("tickers",tickers.toString());
         return tickers;
     }
 
