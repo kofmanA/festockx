@@ -60,15 +60,34 @@ public class CreditCostActivity extends Activity {
         double paymentVal = Double.parseDouble(payment.getText().toString());
         double interestVal = Double.parseDouble(rate.getText().toString());
         int yearsVal = Integer.parseInt(numberSpinner.getSelectedItem().toString());
-        for(int i = 0; i < yearsVal * 12; i++){
+        int monthsVal = yearsVal * 12;
+        int lastMonth = 0;
+        for(int i = 0; i < monthsVal; i++){
             balanceVal *= 1 + interestVal / 100;
             balanceVal -= paymentVal;
+            //Caches the month where it subtracted the payment
+            lastMonth = i + 1;
+            //It has been successfully payed off
+            if(balanceVal <= 0)
+                break;
         }
         boolean isPayable = false;
         if(balanceVal <= 0){
+            int monthsToPay = lastMonth;
+            //Calculate years it took to pay off
+            double yearsToPay = Math.round( (lastMonth / 12) * 100.00) / 100.0;
+            intent.putExtra("monthsToPay",monthsToPay);
+            intent.putExtra("yearsToPay",yearsToPay);
+            intent.putExtra("canPay",true);
+
             isPayable = true;
         }
-        intent.putExtra("payable",isPayable + "");
+        else if(balanceVal > 0){
+            //Calculate years it took to pay off
+            intent.putExtra("balanceLeft",balanceVal);
+            intent.putExtra("canPay",false);
+            isPayable = true;
+        }
         startActivity(intent);
     }
 }

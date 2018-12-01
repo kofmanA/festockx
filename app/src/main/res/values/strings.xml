@@ -11,4 +11,15 @@
     <string name="dayChange">Day Change:</string>
     <string name="changePercent">Change Percent:</string>
     <string name="symbol">Ticker Symbol:</string>
+    <string name="balance">Initial Balance</string>
+    <string name="balance_enter">Enter Balance Here</string>
+    <string name="interestRate">Interest Rate</string>
+    <string name="interestRate_enter">Enter Interest Rate</string>
+    <string name="monthlyPayment">Monthly Payment</string>
+    <string name="monthlyPayment_enter">Enter Monthly Payment</string>
+    <string name="years">Years to Pay Card</string>
+    <string name="years_enter">Select years to pay card</string>
+    <string name="monthsTaken">Months to pay off: </string>
+    <string name="yearsTaken">Years to pay off: </string>
+    <string name="balanceRemaining">Remaining balance: </string>
 </resources>
