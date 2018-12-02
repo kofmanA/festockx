@@ -49,4 +49,9 @@
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="monthToPay">Months to pay debt:</string>
+    <string name="YearsToPay">Years to pay debt:</string>
+    <string name="Unpayable">Debt is unpayable with current data</string>
+    <string name="sendEmail">Send results</string>
+    <string name="lookUpName">Search for contact:</string>
 </resources>

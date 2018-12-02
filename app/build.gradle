@@ -5,6 +5,7 @@ android {
     defaultConfig {
         applicationId "ca.qc.dawsoncollege.stockx.festockx"
         minSdkVersion 22
+
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

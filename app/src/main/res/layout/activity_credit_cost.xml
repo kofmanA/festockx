@@ -8,6 +8,12 @@
     tools:context=".CreditCostActivity">
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -23,7 +29,9 @@
             android:id="@+id/balanceInput"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +50,9 @@
             android:id="@+id/interestRateInput"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +70,9 @@
             android:id="@+id/monthlyPaymentInput"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,8 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center|bottom">
+        android:orientation="vertical">
         <Button
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
@@ -96,4 +107,5 @@
         />
     </LinearLayout>
 
+    </LinearLayout>
 </LinearLayout>
