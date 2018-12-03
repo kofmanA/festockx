@@ -3,11 +3,12 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends AppCompatActivity {
 
     /**
      * creates the options menu

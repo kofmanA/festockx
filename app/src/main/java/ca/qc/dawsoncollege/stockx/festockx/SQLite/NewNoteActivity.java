@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class NewNoteActivity extends AppCompatActivity {
+public class NewNoteActivity extends MenuActivity {
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     private EditText newNoteET;
 
