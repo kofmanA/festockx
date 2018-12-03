@@ -13,16 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".StockNumberSelectActivity">
+        <activity android:name=".StockTicker.StockNumberSelectActivity">
         </activity>
         <activity
-            android:name=".TickerInputActivity"
+            android:name=".StockTicker.TickerInputActivity"
             android:label="@string/title_activity_ticker_input" />
         <activity
-            android:name=".ShowTickerInfoActivity"
+            android:name=".StockTicker.ShowTickerInfoActivity"
             android:label="@string/title_activity_show_ticker_info" />
-        <activity android:name=".TickerInfoActivity"></activity>
-        <activity android:name=".CreditCostActivity">
+        <activity android:name=".StockTicker.TickerInfoActivity"></activity>
+        <activity android:name=".CreditCalculator.CreditCostActivity">
         </activity>
         <activity android:name=".HintsActivity"></activity>
         <activity
@@ -34,7 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowCreditResult"></activity>
+
+        <activity android:name=".SQLite.NoteActivity"></activity>
+
+        <activity android:name=".SQLite.NewNoteActivity"></activity>
+
+        <activity android:name=".SQLite.NoteItemActivity"></activity>
+        <activity android:name=".CreditCalculator.ShowCreditResult"></activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />

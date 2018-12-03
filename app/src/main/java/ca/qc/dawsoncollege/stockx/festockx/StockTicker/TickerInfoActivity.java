@@ -1,8 +1,10 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class TickerInfoActivity extends AppCompatActivity {
 

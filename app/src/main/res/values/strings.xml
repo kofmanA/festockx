@@ -43,16 +43,27 @@
         <item>BTC</item>
     </string-array>
     <string name="save">Save</string>
-    <string name="saved">Settings Saved</string>
+    <string name="saved">Saved</string>
     <string name="invalidEmail">Your email is invalid. Please try again.</string>
     <string name="backSettingTitle">Unsaved Settings</string>
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
-    <string name="No">No</string>
+    <string name="No">No</string>s
+    <string name="cancel">Cancel</string>
+    <string name="noNotes">No notes available</string>
+    <string name="newNoteHint"> Enter your note here</string>
+    <string name="emptyNoteError">Empty note can\'t be saved!</string>
+    <string name="noteNotSaved">Note not saved!</string>
+    <string name="updateNote">Edit your note:</string>
+    <string name="noteTitle">Your notes:</string>
+    <string name="Undo">Undo</string>
+    <string name="noteDeleted"> Note Deleted</string>
     <string name="monthToPay">Months to pay debt:</string>
     <string name="YearsToPay">Years to pay debt:</string>
     <string name="Unpayable">Debt is unpayable with current data</string>
     <string name="sendEmail">Send results</string>
+    <string name="send">Send</string>
+    <string name="noEmailLauncher">There are no email clients installed.</string>
     <string name="lookUpName">Search for contact:</string>
     <string name="noContactFound">No contact found under that name</string>
     <string name="noEmail">The contact you selected had no email address under their informations</string>
@@ -60,7 +71,7 @@
     <string name="source">Source</string>
     <string name="loading">loading...</string>
     <string name="hint">Press to load another hint</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">StockX</string>
     <string name="creditCalculator">Credit Calculator</string>
     <string name="hintButton">Financial Hints</string>
     <string name="foreignExchange">Foreign Exchange</string>

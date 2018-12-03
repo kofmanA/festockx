@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.CreditCalculator;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONObject;
+
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class CreditCostActivity extends Activity {
 
@@ -72,7 +74,7 @@ public class CreditCostActivity extends Activity {
             balanceVal *= 1 + interestVal / 100;
             balanceVal -= paymentVal;
             //Caches the month where it subtracted the payment
-            lastMonth = i + 1;
+            lastMonth = i + 1.0;
             //It has been successfully payed off
             if(balanceVal <= 0)
                 break;

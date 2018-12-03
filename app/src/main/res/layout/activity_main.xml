@@ -26,6 +26,7 @@
             android:layout_marginLeft="10dp"
             android:drawableTop="@drawable/credit_card_icon"
             android:text="@string/creditCalculator"
+            android:onClick="launchCreditCalculator"
             android:background="@color/accent5"
             app:layout_constraintDimensionRatio="1:1" />
 
@@ -41,6 +42,7 @@
             android:layout_marginLeft="5dp"
             android:drawableTop="@drawable/light_bulb_icon"
             android:text="@string/hintButton"
+            android:onClick="launchHints"
             android:background="@color/accent4"
             app:layout_constraintDimensionRatio="1:1" />
 
@@ -72,6 +74,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="@string/noteButton"
+        android:onClick="launchNotes"
         android:drawableTop="@drawable/notepad_icon"
         android:scaleType="fitCenter"
         android:padding="30dp"
@@ -100,6 +103,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:paddingLeft="10dp"
+        android:onClick="launchStockQuotes"
         android:background="@color/accent1"
         android:drawableLeft="@drawable/line_chart_icon"
         />

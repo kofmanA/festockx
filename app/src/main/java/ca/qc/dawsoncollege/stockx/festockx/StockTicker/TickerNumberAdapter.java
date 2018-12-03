@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class TickerNumberAdapter extends BaseAdapter {
     Context context;
