@@ -42,7 +42,7 @@ public class ShowCreditResult extends AppCompatActivity {
         if (canPay){
             TextView  monthsTV = (TextView)findViewById(R.id.months);
             TextView  yearsTV = (TextView)findViewById(R.id.years);
-            monthsTV.setText(String.valueOf(i.getIntExtra("monthsToPay",0)));
+            monthsTV.setText(String.valueOf(i.getDoubleExtra("monthsToPay",0)));
             yearsTV.setText(String.valueOf(i.getDoubleExtra("yearsToPay",0)));
         }
         else{
@@ -125,7 +125,7 @@ public class ShowCreditResult extends AppCompatActivity {
         double balance = i.getDoubleExtra("balance",0);
         double interest = i.getDoubleExtra("interest",0);
         int yearsVal = i.getIntExtra("years",1);
-        int monthsToPay = i.getIntExtra("monthsToPay",0);
+        double monthsToPay = i.getDoubleExtra("monthsToPay",0);
         double yearsToPay = i.getDoubleExtra("yearsToPay",0);
         double payment = i.getDoubleExtra("payment",0);
         String message = "For a debt of " + balance + "$, with " + interest*100 + "% interest, if you wanted to pay it under " +

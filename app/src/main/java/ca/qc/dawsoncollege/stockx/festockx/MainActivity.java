@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 
+import ca.qc.dawsoncollege.stockx.festockx.CreditCalculator.CreditCostActivity;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteActivity;
+import ca.qc.dawsoncollege.stockx.festockx.StockTicker.StockNumberSelectActivity;
 
 public class MainActivity extends Activity {
 
@@ -25,5 +27,14 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void launchCreditCalculator(View v){
+        Intent intent = new Intent(this, CreditCostActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchStockQuotes(View v){
+        Intent intent = new Intent(this, StockNumberSelectActivity.class);
+        startActivity(intent);
+    }
 
 }
