@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.SQLite;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,16 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
 
-import ca.qc.dawsoncollege.stockx.festockx.SQLite.*;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.RecyclerViewClickListener{
     private ItemNoteViewModel INVModel;

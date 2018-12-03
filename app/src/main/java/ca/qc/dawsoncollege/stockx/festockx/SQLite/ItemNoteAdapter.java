@@ -3,22 +3,14 @@ package ca.qc.dawsoncollege.stockx.festockx.SQLite;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import ca.qc.dawsoncollege.stockx.festockx.NewNoteActivity;
-import ca.qc.dawsoncollege.stockx.festockx.NoteActivity;
-import ca.qc.dawsoncollege.stockx.festockx.NoteItemActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class ItemNoteAdapter extends RecyclerView.Adapter<ItemNoteAdapter.ItemViewHolder> {
 

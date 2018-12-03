@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
-import android.widget.TextView;
+
+import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteActivity;
 
 public class MainActivity extends Activity {
 
