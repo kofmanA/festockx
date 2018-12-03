@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".CreditCalculator.CreditCostActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/accent5"
         android:orientation="vertical"
         >
 
@@ -20,6 +22,7 @@
             android:id="@+id/balanceLabel"
             android:text="@string/balance"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -30,6 +33,8 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+
             android:inputType="numberDecimal"
             />
     </LinearLayout>
@@ -41,6 +46,7 @@
             android:id="@+id/interestRateLabel"
             android:text="@string/interestRate"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -50,6 +56,8 @@
             android:id="@+id/interestRateInput"
             android:layout_weight="1"
             android:layout_width="match_parent"
+            android:textSize="20sp"
+
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             />
@@ -61,6 +69,7 @@
         <TextView
             android:text="@string/monthlyPayment"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -69,6 +78,8 @@
             android:hint="@string/monthlyPayment_enter"
             android:id="@+id/monthlyPaymentInput"
             android:layout_weight="1"
+            android:textSize="20sp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
@@ -81,6 +92,7 @@
         <TextView
             android:text="@string/years"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -88,12 +100,14 @@
         <Spinner
             android:id="@+id/year_number"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_weight="1"
         android:orientation="vertical">
         <Button
@@ -102,6 +116,7 @@
             android:gravity="center_horizontal|center"
             android:text="Calculate"
             android:onClick="calculate"
+            android:background="@color/accent9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
         />

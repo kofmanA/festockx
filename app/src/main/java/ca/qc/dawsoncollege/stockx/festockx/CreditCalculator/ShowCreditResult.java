@@ -1,5 +1,6 @@
 package ca.qc.dawsoncollege.stockx.festockx.CreditCalculator;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,6 +58,7 @@ public class ShowCreditResult extends AppCompatActivity {
      * @param v
      * @author Simon Guevara-Ponce
      */
+    @SuppressLint("ResourceAsColor")
     public void sendEmailDialog(View v){
 
         LayoutInflater li = LayoutInflater.from(this);
@@ -68,7 +70,7 @@ public class ShowCreditResult extends AppCompatActivity {
                 .findViewById(R.id.editTextDialogUserInput);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton(R.string.save,
+                .setPositiveButton(R.string.send,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String input = userInput.getText().toString();

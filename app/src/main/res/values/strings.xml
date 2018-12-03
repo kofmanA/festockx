@@ -62,6 +62,7 @@
     <string name="YearsToPay">Years to pay debt:</string>
     <string name="Unpayable">Debt is unpayable with current data</string>
     <string name="sendEmail">Send results</string>
+    <string name="send">Send</string>
     <string name="noEmailLauncher">There are no email clients installed.</string>
     <string name="lookUpName">Search for contact:</string>
     <string name="noContactFound">No contact found under that name</string>
