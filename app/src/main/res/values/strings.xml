@@ -11,9 +11,9 @@
     <string name="currency">Preferred Currency:</string>
     <string name="pStockEx">Preferred Stock Exchange: </string>
     <string-array name="PSE">
-    <item>TSX</item>
-    <item>NYSE</item>
-    <item>NASDAQ</item>
+        <item>TSX</item>
+        <item>NYSE</item>
+        <item>NASDAQ</item>
     </string-array>
     <string-array name="CURR">
         <item>CAN</item>
@@ -27,6 +27,7 @@
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="cancel">Cancel</string>
     <string name="noNotes">No notes available</string>
     <string name="newNoteHint"> Enter your note here</string>
     <string name="emptyNoteError">Empty note can\'t be saved!</string>
@@ -35,4 +36,15 @@
     <string name="noteTitle">Your notes:</string>
     <string name="Undo">Undo</string>
     <string name="noteDeleted"> Note Deleted</string>
+    <string name="hints">Hint</string>
+    <string name="source">Source</string>
+    <string name="loading">loading...</string>
+    <string name="hint">Press to load another hint</string>
+    <string name="title_activity_main">StockX</string>
+    <string name="creditCalculator">Credit Calculator</string>
+    <string name="hintButton">Financial Hints</string>
+    <string name="foreignExchange">Foreign Exchange</string>
+    <string name="noteButton">Notes</string>
+    <string name="stockQuote">Stock Quote</string>
+    <string name="practice">Practice Stocks</string>
 </resources>

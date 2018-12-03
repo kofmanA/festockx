@@ -88,7 +88,7 @@ public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.R
                                 adapter.setNotes(INVModel.getAllNotes().getValue());
                             }
                         })
-                .setNegativeButton(R.string.noteNotSaved,
+                .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();

@@ -128,5 +128,4 @@ public class SettingsActivity extends Activity {
     private void goBack(){
         super.onBackPressed();
     }
-
 }
