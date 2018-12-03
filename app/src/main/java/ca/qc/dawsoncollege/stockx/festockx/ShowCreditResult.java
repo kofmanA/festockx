@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShowCreditResult extends Activity {
+public class ShowCreditResult extends AppCompatActivity {
     TextView result;
     TextView balanceLeft;
     TextView monthsLeft;
@@ -34,7 +35,7 @@ public class ShowCreditResult extends Activity {
             TextView  monthsTV = (TextView)findViewById(R.id.months);
             TextView  yearsTV = (TextView)findViewById(R.id.years);
             monthsTV.setText(String.valueOf(i.getIntExtra("monthsToPay",0)));
-            yearsTV.setText(String.valueOf(i.getDoubleExtra("yearsToPay",0)).substring(0,5));
+            yearsTV.setText(String.valueOf(i.getDoubleExtra("yearsToPay",0)));
         }
         else{
             result.setText(R.string.Unpayable);
@@ -42,7 +43,6 @@ public class ShowCreditResult extends Activity {
     }
 
     public void sendEmailDialog(View v){
-        final String[] editedNote = new String[1];
 
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.prompt_sendemail, null);
@@ -55,18 +55,46 @@ public class ShowCreditResult extends Activity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.save,
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 String input = userInput.getText().toString();
                                 Cursor cursor = getContentResolver()
-                                        .query(ContactsContract.Contacts.CONTENT_URI,null,null,null);
-                                while(cursor.moveToNext()){
+                                        .query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null, null);
+                                boolean contactFound=false;
+                                while (cursor.moveToNext()) {
+
                                     String contactname = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                                    if (contactname.equals(input)){
-                                        String email = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                                        sendEmail(email);
+                                    if (contactname.equalsIgnoreCase(input)) {
+                                        contactFound=true;
+                                        String contactId = cursor
+                                                .getString(cursor
+                                                        .getColumnIndex(ContactsContract.Contacts._ID));
+
+                                        // Create query to use CommonDataKinds classes to fetch emails
+                                        Cursor emails = getContentResolver().query(
+                                                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                                                ContactsContract.CommonDataKinds.Email.CONTACT_ID
+                                                        + " = " + contactId, null, null);
+                                        boolean hasEmail=false;
+                                        while (emails.moveToNext()) {
+                                            hasEmail=true;
+                                            String emailAddress = emails.getString(emails.
+                                                    getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                                            sendEmail(emailAddress);
+                                        }
+                                        if(!hasEmail){
+                                            Toast.makeText(userInput.getContext(),R.string.noEmail,Toast.LENGTH_LONG).show();
+                                        }
                                     }
+
+
+                                }
+                                if(!contactFound){
+                                    Toast.makeText(userInput.getContext(),R.string.noContactFound,Toast.LENGTH_SHORT).show();
                                 }
                             }
+
+
+
 
                         })
                 .setNegativeButton(R.string.No,
@@ -83,15 +111,16 @@ public class ShowCreditResult extends Activity {
     public void sendEmail(String destination){
         Intent ie = new Intent(Intent.ACTION_SEND);
 
-        int balance = i.getIntExtra("balance",0);
-        int interest = i.getIntExtra("interest",0);
+        double balance = i.getDoubleExtra("balance",0);
+        double interest = i.getDoubleExtra("interest",0);
         int yearsVal = i.getIntExtra("years",1);
         int monthsToPay = i.getIntExtra("monthsToPay",0);
-        int yearsToPay = i.getIntExtra("yearsToPay",0);
-        String message = "For a debt of " + balance + "$, with " + interest + " interest, if you wanted to pay it under " +
-                yearsVal;
+        double yearsToPay = i.getDoubleExtra("yearsToPay",0);
+        double payment = i.getDoubleExtra("payment",0);
+        String message = "For a debt of " + balance + "$, with " + interest*100 + "% interest, if you wanted to pay it under " +
+                yearsVal+" years while paying "+payment+"$ every month";
         if (canPay) {
-           message= message+", it would take you " + monthsToPay + "months to do it, or " + yearsToPay + " years.";
+           message= message+", it would take you " + monthsToPay + " months to do it, or " + yearsToPay + " years.";
         }
         else{
             message= message + ", it would be impossible to pay it off in the proposed window of time.";

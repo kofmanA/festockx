@@ -54,4 +54,6 @@
     <string name="Unpayable">Debt is unpayable with current data</string>
     <string name="sendEmail">Send results</string>
     <string name="lookUpName">Search for contact:</string>
+    <string name="noContactFound">No contact found under that name</string>
+    <string name="noEmail">The contact you selected had no email address under their informations</string>
 </resources>
