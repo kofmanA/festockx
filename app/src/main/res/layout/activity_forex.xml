@@ -5,7 +5,10 @@
     tools:context=".ForexActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@color/accent3"
     android:orientation="vertical">
+
 
     <TextView
         android:layout_width="match_parent"
@@ -23,6 +26,7 @@
         android:gravity="center"
         android:hint="@string/amount"
         android:textSize="25sp"
+        android:backgroundTint="@color/accent10"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="40dp"/>
@@ -72,6 +76,7 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:text="@string/convert"
+        android:background="@color/accent10"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:onClick="convert"/>

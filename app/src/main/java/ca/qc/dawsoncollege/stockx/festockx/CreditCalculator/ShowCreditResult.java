@@ -20,9 +20,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class ShowCreditResult extends AppCompatActivity {
+public class ShowCreditResult extends MenuActivity {
     TextView result;
     TextView balanceLeft;
     TextView monthsLeft;
