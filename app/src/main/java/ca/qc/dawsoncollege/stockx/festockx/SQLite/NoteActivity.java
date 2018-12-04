@@ -22,9 +22,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class NoteActivity extends AppCompatActivity implements ItemNoteAdapter.RecyclerViewClickListener{
+public class NoteActivity extends MenuActivity implements ItemNoteAdapter.RecyclerViewClickListener{
     private ItemNoteViewModel INVModel;
     private CoordinatorLayout coordinatorLayout;
     private ItemNoteAdapter adapter;
