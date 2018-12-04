@@ -65,6 +65,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:padding="30dp"
+        android:onClick="launchForEx"
         android:background="@color/accent3"
         app:layout_constraintDimensionRatio="1:1"
         android:layout_weight="1"

@@ -44,4 +44,9 @@ public class MainActivity extends MenuActivity {
         startActivity(intent);
     }
 
+    public void launchForEx(View v){
+        Intent intent = new Intent(this, ForexActivity.class);
+        startActivity(intent);
+    }
+
 }
