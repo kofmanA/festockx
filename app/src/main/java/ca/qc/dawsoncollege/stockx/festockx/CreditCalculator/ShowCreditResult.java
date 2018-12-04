@@ -1,12 +1,16 @@
 package ca.qc.dawsoncollege.stockx.festockx.CreditCalculator;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -74,40 +78,47 @@ public class ShowCreditResult extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String input = userInput.getText().toString();
-                                Cursor cursor = getContentResolver()
-                                        .query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null, null);
-                                boolean contactFound=false;
-                                while (cursor.moveToNext()) {
+                                if (ContextCompat.checkSelfPermission(userInput.getContext(), Manifest.permission.READ_CONTACTS)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    if (askForPermission()) {
+                                        dialog.dismiss();
+                                    }
+                                } else {
+                                    Cursor cursor = getContentResolver()
+                                            .query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null, null);
+                                    boolean contactFound = false;
+                                    while (cursor.moveToNext()) {
 
-                                    String contactname = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                                    if (contactname.equalsIgnoreCase(input)) {
-                                        contactFound=true;
-                                        String contactId = cursor
-                                                .getString(cursor
-                                                .getColumnIndex(ContactsContract.Contacts._ID));
+                                        String contactname = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                                        if (contactname.equalsIgnoreCase(input)) {
+                                            contactFound = true;
+                                            String contactId = cursor
+                                                    .getString(cursor
+                                                            .getColumnIndex(ContactsContract.Contacts._ID));
 
-                                        Cursor emails = getContentResolver().query(
-                                                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                                                ContactsContract.CommonDataKinds.Email.CONTACT_ID
-                                                 + " = " + contactId, null, null);
-                                        boolean hasEmail=false;
-                                        while (emails.moveToNext()) {
-                                            hasEmail=true;
-                                            String emailAddress = emails.getString(emails
-                                                    .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                                            sendEmail(emailAddress);
-                                        }
-                                        if(!hasEmail){
-                                            Toast.makeText(userInput.getContext(),R.string.noEmail,Toast.LENGTH_LONG).show();
+                                            Cursor emails = getContentResolver().query(
+                                                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                                                    ContactsContract.CommonDataKinds.Email.CONTACT_ID
+                                                            + " = " + contactId, null, null);
+                                            boolean hasEmail = false;
+                                            while (emails.moveToNext()) {
+                                                hasEmail = true;
+                                                String emailAddress = emails.getString(emails
+                                                        .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                                                sendEmail(emailAddress);
+                                            }
+                                            if (!hasEmail) {
+                                                Toast.makeText(userInput.getContext(), R.string.noEmail, Toast.LENGTH_LONG).show();
+                                            }
                                         }
                                     }
-                                }
-                                if(!contactFound){
-                                    Toast.makeText(userInput.getContext(),R.string.noContactFound,Toast.LENGTH_SHORT).show();
+                                    if (!contactFound) {
+                                        Toast.makeText(userInput.getContext(), R.string.noContactFound, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         })
-                .setNegativeButton(R.string.No,
+                .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();
@@ -147,6 +158,13 @@ public class ShowCreditResult extends AppCompatActivity {
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, R.string.noEmailLauncher, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean askForPermission(){
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_CONTACTS},
+                200);
+        return true;
     }
 
 }
