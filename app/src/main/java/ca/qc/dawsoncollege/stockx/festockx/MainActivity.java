@@ -9,7 +9,7 @@ import ca.qc.dawsoncollege.stockx.festockx.CreditCalculator.CreditCostActivity;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteActivity;
 import ca.qc.dawsoncollege.stockx.festockx.StockTicker.StockNumberSelectActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class HintsActivity extends Activity {
+public class HintsActivity extends MenuActivity {
     FirebaseAuth mAuth;
     List<Hint> hints;
     FirebaseDatabase database;

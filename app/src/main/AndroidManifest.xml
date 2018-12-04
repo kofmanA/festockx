@@ -12,6 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".AboutActivity">
+        </activity>
+        <activity android:name=".ForexActivity">
+        </activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".StockTicker.StockNumberSelectActivity">
         </activity>
