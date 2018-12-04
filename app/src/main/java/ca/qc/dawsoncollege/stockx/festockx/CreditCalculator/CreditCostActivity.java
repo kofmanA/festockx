@@ -11,9 +11,10 @@ import android.widget.Spinner;
 
 import org.json.JSONObject;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class CreditCostActivity extends Activity {
+public class CreditCostActivity extends MenuActivity {
 
     private JSONObject jsonObj;
     private static final String TAG = "HttpURLConn";

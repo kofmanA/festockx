@@ -18,9 +18,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class StockNumberSelectActivity extends Activity {
+public class StockNumberSelectActivity extends MenuActivity {
 
     private JSONObject jsonObj;
     private static final String TAG = "HttpURLConn";
