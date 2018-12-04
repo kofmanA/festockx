@@ -74,6 +74,7 @@
     <string name="backSettingTitle">Unsaved Settings</string>
     <string name="backSettingContent">Are you sure you want to go back?</string>
     <string name="Yes">Yes</string>
+    <string name="ticker_input">Show info about tickers</string>
     <string name="No">No</string>s
     <string name="cancel">Cancel</string>
     <string name="noNotes">No notes available</string>
