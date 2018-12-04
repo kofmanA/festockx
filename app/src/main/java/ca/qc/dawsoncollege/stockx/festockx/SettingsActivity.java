@@ -104,7 +104,6 @@ public class SettingsActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        final Boolean cancelled;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.backSettingContent)
                 .setTitle(R.string.backSettingTitle);
@@ -129,5 +128,4 @@ public class SettingsActivity extends Activity {
     private void goBack(){
         super.onBackPressed();
     }
-
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".StockNumberSelectActivity">
+    android:background="@color/accent1"
+    tools:context=".StockTicker.StockNumberSelectActivity">
     <TextView
         android:text="@string/number_input"
         android:id="@+id/display_enter"
@@ -35,8 +36,8 @@
             android:text="@string/ticker_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/accent6"
             android:onClick="submit"
             />
     </LinearLayout>
-
 </LinearLayout>
