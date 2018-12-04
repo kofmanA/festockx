@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
 
+            android:backgroundTint="@color/accent9"
             android:inputType="numberDecimal"
             />
     </LinearLayout>
@@ -59,6 +60,7 @@
             android:layout_width="match_parent"
             android:textSize="20sp"
 
+            android:backgroundTint="@color/accent9"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             />
@@ -81,6 +83,7 @@
             android:layout_weight="1"
             android:textSize="20sp"
 
+            android:backgroundTint="@color/accent9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
