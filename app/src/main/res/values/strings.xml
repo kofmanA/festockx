@@ -73,6 +73,7 @@
     <string name="invalidEmail">Your email is invalid. Please try again.</string>
     <string name="backSettingTitle">Unsaved Settings</string>
     <string name="backSettingContent">Are you sure you want to go back?</string>
+    <string name="cantGoBack">Can\'t go back until you\'ve entered your settings</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>s
     <string name="cancel">Cancel</string>

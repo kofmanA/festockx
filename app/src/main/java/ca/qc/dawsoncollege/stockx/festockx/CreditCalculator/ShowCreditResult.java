@@ -51,7 +51,12 @@ public class ShowCreditResult extends AppCompatActivity {
             yearsTV.setText(String.valueOf(i.getDoubleExtra("yearsToPay",0)));
         }
         else{
-            result.setText(R.string.Unpayable);
+           findViewById(R.id.monthLabel).setVisibility(View.GONE);
+            findViewById(R.id.yearLabel).setVisibility(View.GONE);
+            findViewById(R.id.months).setVisibility(View.GONE);
+            findViewById(R.id.years).setVisibility(View.GONE);
+            ((TextView)findViewById(R.id.unpayable)).setText(R.string.Unpayable);
+            ((TextView)findViewById(R.id.unpayable)).setVisibility(View.VISIBLE);
         }
     }
 

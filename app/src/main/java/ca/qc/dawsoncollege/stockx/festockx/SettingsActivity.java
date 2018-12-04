@@ -57,7 +57,7 @@ public class SettingsActivity extends MenuActivity {
             editor.commit();
 
             Toast.makeText(this,R.string.saved,Toast.LENGTH_SHORT).show();
-
+            finish();
         }
         else{
             Toast.makeText(this,R.string.invalidEmail,Toast.LENGTH_LONG).show();
@@ -123,10 +123,27 @@ public class SettingsActivity extends MenuActivity {
     }
 
 
-     /**Calls super.onBackPressed
+     /**Calls super.onBackPressed. Checks if settings were saved at least once, if so, let them go back
       * @author: Simon Guevara-Ponce
      */
     private void goBack(){
-        super.onBackPressed();
+        SharedPreferences prefs = this.getSharedPreferences(
+                "Settings", MODE_PRIVATE);
+        if(prefs.contains("fName")) {
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(this,R.string.cantGoBack,Toast.LENGTH_SHORT).show();
+        }
     }
+
+    /**
+     * stack management: close this activity when another is opened on top to avoid the stack become too big
+     */
+    @Override
+    protected void onStop(){
+        super.onStop();
+        finish();
+    }
+
 }
