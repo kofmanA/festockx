@@ -11,7 +11,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,103 +46,18 @@
         android:layout_margin="20dp"
         android:textSize="30sp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
 
-        <TextView
-            android:id="@+id/zhitv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_marginBottom="0dp"
-            android:onClick="showDescription"
-            android:text="@string/zhijie"
-            android:textSize="25sp" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@android:color/white" />
 
-        <ImageView
-            android:id="@+id/zhiimg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/zhijie"
-            android:onClick="showDescription"/>
 
-        <TextView
-            android:id="@+id/feltv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/felicia"
-            android:textSize="25sp"
-            android:layout_margin="10sp"
-            android:layout_marginBottom="0dp"
-            android:onClick="showDescription"/>
-
-        <ImageView
-            android:id="@+id/felimg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/felicia"
-            android:onClick="showDescription" />
-
-        <TextView
-            android:id="@+id/simontv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/simon"
-            android:textSize="25sp"
-            android:layout_margin="10sp"
-            android:layout_marginBottom="0dp"
-            android:onClick="showDescription"/>
-
-        <ImageView
-            android:id="@+id/simonimg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/simon"
-            android:onClick="showDescription" />
-
-        <TextView
-            android:id="@+id/alextv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/alex"
-            android:textSize="25sp"
-            android:layout_margin="10sp"
-            android:layout_marginBottom="0dp"
-            android:onClick="showDescription"/>
-
-        <ImageView
-            android:id="@+id/aleximg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/alex"
-            android:onClick="showDescription" />
-
-    </LinearLayout>
 </LinearLayout>
 </ScrollView>

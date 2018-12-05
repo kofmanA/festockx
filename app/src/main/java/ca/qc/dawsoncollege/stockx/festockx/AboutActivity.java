@@ -3,6 +3,8 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,98 +12,33 @@ import android.widget.TextView;
 /**
  * @author Felicia
  */
-public class AboutActivity extends MenuActivity{
+public class AboutActivity extends MenuActivity  {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-    }
 
-    /**
-     * gives the id of the element that invoked this method to receive the name of the person "clicked"
-     * and shows an appropriate alert containing the person's description
-     * @param view
-     */
-    public void showDescription (View view){
-        int id = 0;
-        String name;
-        String description;
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager vp = (ViewPager) findViewById(R.id.viewpager);
+        vp.setAdapter(new PersonFragmentPagerAdapter(getSupportFragmentManager(),
+                AboutActivity.this));
 
-        if(view instanceof ImageView || view instanceof TextView){
-            id = view.getId();
-
-        }
-
-        description = getDescription(id);
-        name = getName(id);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle(name)
-                .setMessage(description)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
-
-    }
-
-    /**
-     * receives an id to know which element was clicked and returns the corresponding description string
-     * @param id
-     * @return
-     */
-    private String getDescription (int id) {
-        String description = getString(R.string.probdes);
-        switch(id){
-            case R.id.zhiimg:
-            case R.id.zhitv :
-                return getString(R.string.zhides);
-            case R.id.felimg:
-            case R.id.feltv :
-                return getString(R.string.feldes);
-            case R.id.simonimg:
-            case R.id.simontv :
-                return getString(R.string.simondes);
-            case R.id.aleximg:
-            case R.id.alextv :
-                return getString(R.string.alexdes);
-        }
-        return description;
-    }
-
-    /**
-     * receives an id and returns the corresponding name of the person clicked
-     * @param id
-     * @return
-     */
-    private String getName(int id){
-        String name = getString(R.string.probname);
-        switch(id){
-            case R.id.zhiimg:
-            case R.id.zhitv :
-                return "Zhijie Cao";
-            case R.id.felimg:
-            case R.id.feltv :
-                return "Felicia Gorgacheva";
-            case R.id.simonimg:
-            case R.id.simontv :
-                return "Simon Guevara";
-            case R.id.aleximg:
-            case R.id.alextv :
-                return "Alex Kofman";
-        }
-        return name;
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(vp);
     }
 
     /**
      * stack management: close this activity when another is opened on top to avoid the stack become too big
      */
     @Override
-    protected void onStop(){
+    public void onStop(){
         super.onStop();
         finish();
     }
+
+
+
+
 }
