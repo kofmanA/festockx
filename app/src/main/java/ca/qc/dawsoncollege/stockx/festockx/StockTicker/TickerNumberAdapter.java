@@ -20,7 +20,7 @@ public class TickerNumberAdapter extends BaseAdapter {
     Context context;
     int numTickers;
     private static LayoutInflater inflater = null;
-
+    String[] data;
 
     @Override
     public Object getItem(int position){
@@ -28,9 +28,11 @@ public class TickerNumberAdapter extends BaseAdapter {
         return position;
     }
 
-    public TickerNumberAdapter(Activity stockNumberSelectActivity, int numTickers){
+    public TickerNumberAdapter(Activity stockNumberSelectActivity, int numTickers, String[] data){
         context = stockNumberSelectActivity;
         this.numTickers = numTickers;
+        //Pass all data from constructor
+        this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -53,9 +55,18 @@ public class TickerNumberAdapter extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent){
         Holder holder = new Holder();
-        View rowView;
-        rowView = inflater.inflate(R.layout.activity_ticker_input, null);
-        holder.et = (EditText) rowView.findViewById(R.id.tickerInput);
+        View rowView = convertView;
+        if(rowView == null) {
+            rowView = inflater.inflate(R.layout.activity_ticker_input, null);
+            holder.et = (EditText) rowView.findViewById(R.id.tickerInput);
+            //If data contains elements to reload into the ticker boxes
+            if(data != null && data.length != 0){
+                if(data.length > position) {
+                    holder.et.setText(data[position]);
+                    Log.d("TEST", "getView: " + data[position]);
+                }
+            }
+        }
         return rowView;
     }
 
