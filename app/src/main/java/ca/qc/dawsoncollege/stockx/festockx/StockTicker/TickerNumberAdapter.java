@@ -31,6 +31,7 @@ public class TickerNumberAdapter extends BaseAdapter {
     public TickerNumberAdapter(Activity stockNumberSelectActivity, int numTickers, String[] data){
         context = stockNumberSelectActivity;
         this.numTickers = numTickers;
+        //Pass all data from constructor
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -58,6 +59,7 @@ public class TickerNumberAdapter extends BaseAdapter {
         if(rowView == null) {
             rowView = inflater.inflate(R.layout.activity_ticker_input, null);
             holder.et = (EditText) rowView.findViewById(R.id.tickerInput);
+            //If data contains elements to reload into the ticker boxes
             if(data != null && data.length != 0){
                 if(data.length > position) {
                     holder.et.setText(data[position]);
