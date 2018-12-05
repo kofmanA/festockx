@@ -26,9 +26,10 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class ShowTickerInfoActivity extends Activity {
+public class ShowTickerInfoActivity extends MenuActivity {
 
     private JSONObject jsonObj;
     RecyclerView tickerInfoList;
