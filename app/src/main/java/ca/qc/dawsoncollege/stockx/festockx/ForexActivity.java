@@ -135,8 +135,6 @@ public class ForexActivity extends MenuActivity {
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                     from.setAdapter(spinnerArrayAdapter);
                     to.setAdapter(spinnerArrayAdapter);
-
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
