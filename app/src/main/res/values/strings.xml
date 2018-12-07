@@ -106,4 +106,7 @@
     <string name="noteButton">Notes</string>
     <string name="stockQuote">Stock Quote</string>
     <string name="practice">Practice Stocks</string>
+    <string name="calculate">Calculate</string>
+    <string name="buyStock">Buy Stock</string>
+    <string name="buyStockPrompt">Enter number of selected stocks to purchase</string>
 </resources>
