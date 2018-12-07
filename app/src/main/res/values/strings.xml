@@ -109,4 +109,8 @@
     <string name="calculate">Calculate</string>
     <string name="buyStock">Buy Stock</string>
     <string name="buyStockPrompt">Enter number of selected stocks to purchase</string>
+    <string name="moneyLeftDialogTitle">Balance</string>
+    <string name="moneyLeftDialogMessage">Your current balance now is: </string>
+    <string name="moneyLeftDialogGoTo">Would you like to see your portfolio?</string>
+
 </resources>

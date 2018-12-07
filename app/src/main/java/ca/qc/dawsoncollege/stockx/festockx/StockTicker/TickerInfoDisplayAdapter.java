@@ -161,7 +161,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         ConnectivityManager connMgr = (ConnectivityManager) holder.getContext().getSystemService(holder.getContext().CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if(netInfo != null && netInfo.isConnected()){
-            new BuyStock().execute(url);
+           new BuyStock().execute(url);
         }
     }
 
@@ -173,13 +173,13 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
                 //****************************TEMP CLASS FOR INTENT*****************************
-                Intent i = new Intent(this, PortolioActivity.class);
+               // Intent i = new Intent(this, PortolioActivity.class);
                 //data object indicates that querying the API with the ticker
                 if(jsonObj.has("cashleft")){
                     String moneyLeft = jsonObj.getString("cashleft");
                     //Get cash left and set intent to new activity
-                    i.putExtra("cashleft",moneyLeft);
-                    startActivity(i);
+                //   i.putExtra("cashleft",moneyLeft);
+                     popUpMoneyDialog(moneyLeft);
                 }
                 else if(jsonObj.has("error")){
                     //Send error message to new activity
@@ -204,6 +204,28 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
+
+        private void  popUpMoneyDialog(String moneyLeft){
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage+moneyLeft+"$."+R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, dialogClickListener)
+                    .setNegativeButton(R.string.No, dialogClickListener).show();
+
+        }
+
     }
 
     private String downloadUrl(String myUrl) throws IOException {
