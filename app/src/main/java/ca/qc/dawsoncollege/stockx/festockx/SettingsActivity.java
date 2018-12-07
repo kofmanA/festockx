@@ -86,9 +86,6 @@ public class SettingsActivity extends MenuActivity {
         if(prefs.contains("eAddress")){
             eAddressET.setText(prefs.getString("eAddress","ERROR"));
         }
-        if(prefs.contains("eAddress")){
-            eAddressET.setText(prefs.getString("eAddress","ERROR"));
-        }
         if(prefs.contains("pStockEx")){
             pStockExSpin.setPrompt(prefs.getString("pStockEx","ERROR"));
         }
