@@ -55,6 +55,8 @@
     <string name="lastName">Last Name:</string>
     <string name="lastNameHint">Enter your last name here</string>
     <string name="emailAddress">Email Address: </string>
+    <string name="password">Password:</string>
+    <string name="register">Register:</string>
     <string name="emailAddressHint">example@gmail.com</string>
     <string name="currency">Preferred Currency:</string>
     <string name="pStockEx">Preferred Stock Exchange: </string>

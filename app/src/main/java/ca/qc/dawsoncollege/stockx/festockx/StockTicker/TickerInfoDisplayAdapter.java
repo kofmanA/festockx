@@ -172,19 +172,14 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             try {
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
-                //****************************TEMP CLASS FOR INTENT*****************************
                // Intent i = new Intent(this, PortolioActivity.class);
-                //data object indicates that querying the API with the ticker
                 if(jsonObj.has("cashleft")){
                     String moneyLeft = jsonObj.getString("cashleft");
-                    //Get cash left and set intent to new activity
                 //   i.putExtra("cashleft",moneyLeft);
                      popUpMoneyDialog(moneyLeft);
                 }
                 else if(jsonObj.has("error")){
-                    //Send error message to new activity
                     String errorMsg = jsonObj.getString("error");
-                    //Get cash left and set intent to new activity
                    // i.putExtra("error",errorMsg);
                    // startActivity(i);
 
@@ -211,11 +206,11 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
-                            //Yes button clicked
+                            //launch activity
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
-                            //No button clicked
+                            dialog.dismiss();
                             break;
                     }
                 }
