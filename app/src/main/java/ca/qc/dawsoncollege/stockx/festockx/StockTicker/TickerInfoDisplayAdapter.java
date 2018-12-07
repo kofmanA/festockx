@@ -115,7 +115,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
 
     public class Holder extends RecyclerView.ViewHolder {
-        Context context;
+        public Context context;
         TextView symbolName;
         TextView companyName;
         TextView currentPrice;
@@ -135,19 +135,33 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             dayChange = (TextView) itemView.findViewById(R.id.dayChangeDisplay);
             changePct = (TextView) itemView.findViewById(R.id.changePercentDisplay);
         }
+
+        public Context getContext(){
+            return this.context;
+        }
     }
 
     public void getCashLeft(Holder holder){
+        /**
+         * TODO:
+         * Create second Async Class to log user in and receive bearer token
+         * Send email and password in a json object
+         * Get back the value from the access_token json object
+         * If there is not a valid login, the json object is called error, so check for its existence
+         */
         //Get token of logged in user from settings
-        String token = "";
+        String loginUrl = "";
+
+
+        String bearerToken = "bk3gi7ZJHWLyeG4QhI2ruwRqLsZCLhNCIpn0qYivknYwL5I3p8emaJD5ABwo";
 
         //change to heroku URL for later
-        String url = "https://ass3.test/api/api/buy?api_token=" + token + "&quantity=" + numStocksToBuy + "&name=" + stockName ;
+        String url = "https://ass3.test/api/api/buy?api_token=" + bearerToken + "&quantity=" + numStocksToBuy + "&name=" + stockName ;
 
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) holder.getContext().getSystemService(holder.getContext().CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if(netInfo != null && netInfo.isConnected()){
-            new ShowTickerInfoActivity.BuyStock().execute(url);
+            new BuyStock().execute(url);
         }
     }
 
@@ -158,12 +172,22 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             try {
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
+                //****************************TEMP CLASS FOR INTENT*****************************
+                Intent i = new Intent(this, PortolioActivity.class);
                 //data object indicates that querying the API with the ticker
                 if(jsonObj.has("cashleft")){
+                    String moneyLeft = jsonObj.getString("cashleft");
                     //Get cash left and set intent to new activity
+                    i.putExtra("cashleft",moneyLeft);
+                    startActivity(i);
                 }
                 else if(jsonObj.has("error")){
                     //Send error message to new activity
+                    String errorMsg = jsonObj.getString("error");
+                    //Get cash left and set intent to new activity
+                   // i.putExtra("error",errorMsg);
+                   // startActivity(i);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -193,6 +217,47 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             conn.setRequestMethod("GET");
             //Allow input
             conn.setDoInput(true);
+            conn.setRequestProperty("Authorization:","Bearer ");
+            conn.connect();
+
+            int response = conn.getResponseCode();
+            if(response != HttpsURLConnection.HTTP_OK){
+                return "Server returned: " + response + " aborting read";
+            }
+            //The request is fine
+            is = conn.getInputStream();
+            return readIt(is);
+        } catch(IOException e) {
+            Log.e(TAG, "IO exception in bg");
+            Log.getStackTraceString(e);
+            throw e;
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignore) {
+                }
+                if (conn != null)
+                    try {
+                        conn.disconnect();
+                    } catch (IllegalStateException ignore ) {
+                    }
+            }
+        }
+    }
+
+    private String getBearerToken(String email, String pword) throws IOException {
+        InputStream is = null;
+        HttpURLConnection conn = null;
+        URL url = new URL(email+pword);
+        try {
+            conn = (HttpURLConnection) url.openConnection() ;
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("GET");
+            //Allow input
+            conn.setDoInput(true);
+            conn.setRequestProperty("Authorization:","Bearer ");
             conn.connect();
 
             int response = conn.getResponseCode();
