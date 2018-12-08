@@ -72,10 +72,8 @@ public class PortfolioActivity extends MenuActivity {
             @Override
             protected void onPostExecute(String result){
                 try {
-                    Log.d("TEst", "onPostExecute: " + result);
                     JSONObject json = new JSONObject(result);
                     JWTToken = json.getString("access_token");
-                    Log.d("TOKEN", "onPostExecute: " + JWTToken);
                     new Request(){
                         @Override
                         protected void onPostExecute(String result){
