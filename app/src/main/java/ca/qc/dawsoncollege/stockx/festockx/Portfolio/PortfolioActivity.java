@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -34,10 +35,11 @@ import java.util.Iterator;
 
 import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
+import ca.qc.dawsoncollege.stockx.festockx.SQLite.ItemNoteAdapter;
 
-public class PortfolioActivity extends MenuActivity {
+public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.RecyclerViewClickListener {
     private String JWTToken = null;
-
+    private OwnedStockAdapter adapt;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,10 @@ public class PortfolioActivity extends MenuActivity {
                                     ownedStocks.put(object.getString("ticker"), object.getInt("quantity"));
                                 }
 
-                                recyclerView.setAdapter(new OwnedStockAdapter(PortfolioActivity.this, ownedStocks));
+
+                                adapt = new OwnedStockAdapter(PortfolioActivity.this, ownedStocks);
+                                recyclerView.setAdapter(adapt);
+                                adapt.setRecyclerClick(PortfolioActivity.this);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(PortfolioActivity.this));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -96,7 +101,6 @@ public class PortfolioActivity extends MenuActivity {
                         };
                     }.execute(allStocksData);
                 } catch (JSONException e) {
-                    Log.d("HELLO",e.getMessage());
                     Toast.makeText(PortfolioActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -201,4 +205,16 @@ public class PortfolioActivity extends MenuActivity {
         }
     }
 
+    /**Summary: On click event for each note. Creates a dialog with the edit text. The Edit text is attached to a
+     * positive and negative button. It calls the view model update note method with the new note String
+     * if the save button is triggered.
+     *
+     * @param v
+     * @param position: position of the note picked
+     */
+    @Override
+    public void recyclerViewListClicked(View v, int position) {//
+        // Buy Stock Code!
+        adapt.getItemId(position);
+    }
 }
