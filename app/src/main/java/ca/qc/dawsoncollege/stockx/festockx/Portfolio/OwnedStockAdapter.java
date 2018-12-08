@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,24 +19,25 @@ import ca.qc.dawsoncollege.stockx.festockx.R;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 
 class OwnedStockAdapter extends RecyclerView.Adapter {
-    Map<String, Integer> ownedStocks;
+    HashMap<String, Integer> ownedStocks;
     Context context;
     private final LayoutInflater inflater;
 
-    public OwnedStockAdapter(Context context, Map<String, Integer> ownedStocks){
+    public OwnedStockAdapter(Context context, HashMap<String, Integer> ownedStocks){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.ownedStocks = ownedStocks;
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TextView ticker;
-        final TextView quantity;
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView ticker;
+        TextView quantity;
 
-        private ItemViewHolder(View itemView){
+        public ItemViewHolder(View itemView){
             super(itemView);
-            ticker = itemView.findViewById(R.id.ticker);
-            quantity = itemView.findViewById(R.id.stockQuantity);
+            ticker = (TextView)itemView.findViewById(R.id.ticker);
+            quantity = (TextView)itemView.findViewById(R.id.stockQuantity);
+            Log.d("ID", "ItemViewHolder: " + ticker.getId());
             itemView.setOnClickListener(this);
         }
 
@@ -63,7 +65,9 @@ class OwnedStockAdapter extends RecyclerView.Adapter {
         }
         String ticker = keys.get(i);
         int quantity = ownedStocks.get(ticker);
-        ivh.quantity.setText(quantity);
+        Log.d("TEST", "onBindViewHolder: " + quantity);
+        Log.d("TEST", "onBindViewHolder: " + ticker);
+        ivh.quantity.setText(quantity + "");
         ivh.ticker.setText(ticker);
     }
 
