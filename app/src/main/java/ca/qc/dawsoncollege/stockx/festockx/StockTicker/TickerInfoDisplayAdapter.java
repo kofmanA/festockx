@@ -1,5 +1,6 @@
 package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
+import ca.qc.dawsoncollege.stockx.festockx.Portfolio.PortfolioActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,6 +46,7 @@ import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
+    private String errorMsg;
     private String moneyLeft;
     private String JWTToken;
     private String stockName;
@@ -198,13 +200,13 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             try {
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
-                // Intent i = new Intent(this, PortolioActivity.class);
+                // Intent i = new Intent(this, PortolioActivity.class);s
                 if (jsonObj.has("cashleft")) {
                     moneyLeft = jsonObj.getString("cashleft");
                     //   i.putExtra("cashleft",moneyLeft);
-                    popUpMoneyDialog(moneyLeft);
+                    popUpMoneyDialog(moneyLeft,context);
                 } else if (jsonObj.has("error")) {
-                    String errorMsg = jsonObj.getString("error");
+                    errorMsg = jsonObj.getString("error");
                     // i.putExtra("error",errorMsg);
                     // startActivity(i);
 
@@ -225,12 +227,38 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             }
         }
 
-        private void popUpMoneyDialog(String moneyLeft) {
+        private void popUpMoneyDialog(String moneyLeft,Context context) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
+                        //When positive button is clicked, pop the portfolio up with the passed intent data
                         case DialogInterface.BUTTON_POSITIVE:
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                            alertDialogBuilder
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.showPortfolio,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent i = new Intent(context, PortfolioActivity.class);
+                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
+                                                    if(!moneyLeft.equals(""))
+                                                        i.putExtra("cashleft",moneyLeft);
+                                                    if(!errorMsg.equals(""))
+                                                        i.putExtra("error",errorMsg);
+                                                    //Pass the data from here to the portfolio activity
+                                                    ///WHY CANT I DO THIS
+                                                    startActivity(i);
+                                                }
+                                            })
+                                    .setNegativeButton(R.string.cancel,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
                             //launch activity
                             break;
 
