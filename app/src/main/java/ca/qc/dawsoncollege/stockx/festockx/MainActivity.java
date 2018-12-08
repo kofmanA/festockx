@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.view.View;
 
 import ca.qc.dawsoncollege.stockx.festockx.CreditCalculator.CreditCostActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Portfolio.PortfolioActivity;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteActivity;
 import ca.qc.dawsoncollege.stockx.festockx.StockTicker.StockNumberSelectActivity;
 
@@ -46,6 +47,11 @@ public class MainActivity extends MenuActivity {
 
     public void launchForEx(View v){
         Intent intent = new Intent(this, ForexActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchPortfolio(View v){
+        Intent intent = new Intent(this, PortfolioActivity.class);
         startActivity(intent);
     }
 

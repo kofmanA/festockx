@@ -77,7 +77,6 @@ public class SettingsActivity extends MenuActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "Settings", MODE_PRIVATE);
         if(prefs.contains("fName")){
-            Log.i("HELLO","saved");
             fNameET.setText(prefs.getString("fName","ERROR"));
         }
         if(prefs.contains("lName")){
