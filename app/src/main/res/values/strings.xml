@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">FE&lt;StockX></string>
+
+    <string name="about">About</string>
+    <string name="description">Stock X is intended to be a tool for education about finances such as loans, currency exchange and the sotck market. It is a sort of simulator that allows you to use "virtual" money to see what exactly could happen in the real world when you ask for loans, exchange your currency or invest in stocks. Our app can help you learn about the behaviour of the fluctuating world of finances without risking real money</string>
+    <string name="purpose">Stock X was created by 5th semester students as a part of both Internet Application Development III (420-524-DW) and Mobile Software Development (420-518-DW) courses for the Dawson College Computer Science program.</string>
+    <string name="devs">Developers</string>
+    <string name="felicia">Felicia Gorgacheva</string>
+    <string name="simon">Simon Guevara</string>
+    <string name="zhijie">Zhijie Cao</string>
+    <string name="alex">Alex Kofman</string>
+
+    <string name="feldes">Hello! I\'m Bulgarian and I love to develop apps for many people to enjoy!</string>
+    <string name="simondes">My name is Simon Guevara-Ponce and I\'m a Computer Science student at Dawson College.</string>
+    <string name="zhides">Hi! I want to be a developer and I dream about going to space!</string>
+    <string name="alexdes">I\'m Alex and I love music and app development.</string>
+    
+    <string name="forex">Foreign Currency Exchange</string>
+    <string name="amount">Amount</string>
+    <string name="fromcurrency">From</string>
+    <string name="tocurrency">To</string>
+    <string name="convert">Convert</string>
+
+    <string name="probname">Problem displaying name.</string>
+    <string name="probdes">Problem displaying the description.</string>
+    <string name="error">Error</string>
+    <string name="errmsg">There was an error communicating with the API.</string>
+
+    <string name="number_input">Enter number of tickers</string>
+    <string name="enterTickers">Enter ticker names here</string>
+    <string name="title_activity_ticker_input">TickerInputActivity</string>
+    <string name="title_activity_show_ticker_info">ShowTickerInfoActivity</string>
+    <string name="companyName">Company Name:</string>
+    <string name="currentPrice">Current Stock Price:</string>
+    <string name="currencyType">Currency Type: </string>
+    <string name="stockExchange">Stock Exchange:</string>
+    <string name="dayChange">Day Change:</string>
+    <string name="changePercent">Change Percent:</string>
+    <string name="symbol">Ticker Symbol:</string>
+    <string name="balance">Initial Balance</string>
+    <string name="balance_enter">Enter Balance Here</string>
+    <string name="interestRate">Interest Rate</string>
+    <string name="interestRate_enter">Enter Interest Rate</string>
+    <string name="monthlyPayment">Monthly Payment</string>
+    <string name="monthlyPayment_enter">Enter Monthly Payment</string>
+    <string name="years">Years to Pay Card</string>
+    <string name="years_enter">Select years to pay card</string>
+    <string name="monthsTaken">Months to pay off: </string>
+    <string name="yearsTaken">Years to pay off: </string>
+    <string name="balanceRemaining">Remaining balance: </string>
+    <string name="Settings"> Settings</string>
+    <string name="setSettings"> Set your settings:</string>
+    <string name="firstName">First Name:</string>
+    <string name="firstNameHint">Enter your first name here</string>
+    <string name="lastName">Last Name:</string>
+    <string name="lastNameHint">Enter your last name here</string>
+    <string name="emailAddress">Email Address: </string>
+    <string name="emailAddressHint">example@gmail.com</string>
+    <string name="currency">Preferred Currency:</string>
+    <string name="pStockEx">Preferred Stock Exchange: </string>
+    <string-array name="PSE">
+        <item>TSX</item>
+        <item>NYSE</item>
+        <item>NASDAQ</item>
+    </string-array>
+    <string-array name="CURR">
+        <item>CAN</item>
+        <item>USD</item>
+        <item>BTC</item>
+    </string-array>
+    <string name="save">Save</string>
+    <string name="saved">Saved</string>
+    <string name="invalidEmail">Your email is invalid. Please try again.</string>
+    <string name="backSettingTitle">Unsaved Settings</string>
+    <string name="backSettingContent">Are you sure you want to go back?</string>
+    <string name="cantGoBack">Can\'t go back until you\'ve entered your settings</string>
+    <string name="Yes">Yes</string>
+    <string name="ticker_input">Show info about tickers</string>
+    <string name="No">No</string>s
+    <string name="cancel">Cancel</string>
+    <string name="noNotes">No notes available</string>
+    <string name="newNoteHint"> Enter your note here</string>
+    <string name="emptyNoteError">Empty note can\'t be saved!</string>
+    <string name="noteNotSaved">Note not saved!</string>
+    <string name="updateNote">Edit your note:</string>
+    <string name="noteTitle">Your notes:</string>
+    <string name="Undo">Undo</string>
+    <string name="noteDeleted"> Note Deleted</string>
+    <string name="monthToPay">Months to pay debt:</string>
+    <string name="YearsToPay">Years to pay debt:</string>
+    <string name="Unpayable">Debt is unpayable with current data</string>
+    <string name="sendEmail">Send results</string>
+    <string name="send">Send</string>
+    <string name="noEmailLauncher">There are no email clients installed.</string>
+    <string name="lookUpName">Search for contact:</string>
+    <string name="noContactFound">No contact found under that name</string>
+    <string name="noEmail">The contact you selected had no email address under their informations</string>
+    <string name="hints">Hint</string>
+    <string name="source">Source</string>
+    <string name="loading">loading...</string>
+    <string name="hint">Press to load another hint</string>
+    <string name="title_activity_main">StockX</string>
+    <string name="creditCalculator">Credit Calculator</string>
+    <string name="hintButton">Financial Hints</string>
+    <string name="foreignExchange">Foreign Exchange</string>
+    <string name="noteButton">Notes</string>
+    <string name="stockQuote">Stock Quote</string>
+    <string name="practice">Practice Stocks</string>
+</resources>

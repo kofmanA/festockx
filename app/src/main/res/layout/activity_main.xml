@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_margin="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="30dp"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:drawableTop="@drawable/credit_card_icon"
+            android:text="@string/creditCalculator"
+            android:onClick="launchCreditCalculator"
+            android:background="@color/accent5"
+            app:layout_constraintDimensionRatio="1:1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="30dp"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:drawableTop="@drawable/light_bulb_icon"
+            android:text="@string/hintButton"
+            android:onClick="launchHints"
+            android:background="@color/accent4"
+            app:layout_constraintDimensionRatio="1:1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/foreignExchange"
+        android:drawableTop="@drawable/exchange_icon"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:padding="30dp"
+        android:onClick="launchForEx"
+        android:background="@color/accent3"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/noteButton"
+        android:onClick="launchNotes"
+        android:drawableTop="@drawable/notepad_icon"
+        android:scaleType="fitCenter"
+        android:padding="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@color/accent2"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_weight="1"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:text="@string/stockQuote"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:paddingLeft="10dp"
+        android:onClick="launchStockQuotes"
+        android:background="@color/accent1"
+        android:drawableLeft="@drawable/line_chart_icon"
+        />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:text="@string/practice"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/accent6"
+        android:drawableLeft="@drawable/presentation_icon"
+        />
+    </LinearLayout>
+</LinearLayout>
