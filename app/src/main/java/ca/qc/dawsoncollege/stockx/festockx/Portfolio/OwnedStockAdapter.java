@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -90,8 +91,14 @@ class OwnedStockAdapter extends RecyclerView.Adapter {
     }
 
     public String[] getStock(int position){
-      //Return new stock information.
-        return new String[0];
+        ownedStocks.keySet();
+        List<String> keys = new ArrayList<>();
+        for(String s : ownedStocks.keySet()){
+            keys.add(s);
+        }
+        String ticker = keys.get(position);
+        int quantity = ownedStocks.get(ticker);
+        return new String[]{ticker,String.valueOf(quantity)};
     }
 
 }

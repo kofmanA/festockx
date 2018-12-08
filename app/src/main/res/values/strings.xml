@@ -114,6 +114,8 @@
     <string name="moneyLeftDialogTitle">Balance</string>
     <string name="moneyLeftDialogMessage">Your current balance now is: </string>
     <string name="moneyLeftDialogGoTo">Would you like to see your portfolio?</string>
-
+    <string name="sellStocksTitle">Sell your stocks</string>
+    <string name="sellStockMessage">How many stocks would you like to sell?</string>
+    <string name="sell">Sell</string>
     <string name="portfolio">Stock Portfolio</string>
 </resources>
