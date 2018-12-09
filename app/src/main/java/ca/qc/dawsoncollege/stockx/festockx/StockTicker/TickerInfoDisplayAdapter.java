@@ -54,7 +54,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     private JSONObject jsonObj;
     Context context;
     List<TickerStock> tickers;
-    private final String TAG = "call";
+    private final String TAG = "issue";
     private int BUFFER = 1024;
 
 
@@ -76,42 +76,42 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.context);
             alertDialogBuilder.setView(promptsBuyStock);
 
-            final EditText userInput = (EditText) promptsBuyStock
-                    .findViewById(R.id.editTextDialogUserInput);
+            EditText userInput = (EditText) promptsBuyStock
+                    .findViewById(R.id.editStockBuyAmount);
             final TextView buyStockPrompt = (TextView) promptsBuyStock.findViewById(R.id.buyStockPrompt);
             alertDialogBuilder
-                    .setCancelable(false)
+                    .setCancelable(true)
                     .setPositiveButton(R.string.buyStock,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //GET USER INFO
-                                    JSONObject authenticationJSON = new JSONObject();
-                                    try {
-                                        authenticationJSON.put("email", "asd@asd.asd");
-                                        authenticationJSON.put("password", "asdasdasd");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    final HashMap<String, String> authData = new HashMap<>();
-                                    authData.put("url", "http://stockxportfolio.herokuapp.com/api/auth/login");
-                                    authData.put("method", "POST");
-                                    authData.put("data", authenticationJSON.toString());
+                            (dialog, id) -> {
 
-                                    ConnectivityManager connMgr = (ConnectivityManager) holder.getContext().getSystemService(holder.getContext().CONNECTIVITY_SERVICE);
-                                    NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
-
-                                    //LOGIN, retreive JWT Token
-                                    if (netInfo != null && netInfo.isConnected()) {
-                                        new Request().execute(authData);
-                                    }
-
-                                    //Get number of stocks to buy and the name of the stock they want to purchase
-                                    numStocksToBuy = userInput.getText().toString();
-                                    stockName = holder.symbolName.getText().toString();
-
-                                    //Send Api request to our own API with numStocks and stockName
-                                    getCashLeft(holder);
+                                Log.d("Click works","click");
+                                //GET USER INFO
+                                JSONObject authenticationJSON = new JSONObject();
+                                try {
+                                    authenticationJSON.put("email", "asd@asd.asd");
+                                    authenticationJSON.put("password", "asdasdasd");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
+                                final HashMap<String, String> authData = new HashMap<>();
+                                authData.put("url", "http://stockxportfolio.herokuapp.com/api/auth/login");
+                                authData.put("method", "POST");
+                                authData.put("data", authenticationJSON.toString());
+
+                                ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                                NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
+
+                                //LOGIN, retreive JWT Token
+                                if (netInfo != null && netInfo.isConnected()) {
+                                    new Request().execute(authData);
+                                }
+
+                                //Get number of stocks to buy and the name of the stock they want to purchase
+                                numStocksToBuy = userInput.getText().toString();
+                                stockName = holder.symbolName.getText().toString();
+
+                                //Send Api request to our own API with numStocks and stockName
+                                getCashLeft(parent,holder);
                             })
                     .setNegativeButton(R.string.cancel,
                             new DialogInterface.OnClickListener() {
@@ -172,7 +172,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         }
     }
 
-    public void getCashLeft(Holder holder) {
+    public void getCashLeft(ViewGroup parent, Holder holder) {
         /**
          * TODO:
          * Create second Async Class to log user in and receive bearer token
@@ -186,7 +186,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         //change to heroku URL for later
         String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName;
 
-        ConnectivityManager connMgr = (ConnectivityManager) holder.getContext().getSystemService(holder.getContext().CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
             new BuyStock().execute(url);
@@ -220,6 +220,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         @Override
         protected String doInBackground(String... urls) {
             try {
+                Log.e(TAG, "DOwnloading URL "+ urls[0]);
                 return downloadUrl(urls[0]);
             } catch (IOException e) {
                 Log.e(TAG, "exception thrown by download");
@@ -228,50 +229,54 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         }
 
         private void popUpMoneyDialog(String moneyLeft,Context context) {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    switch (which) {
+//                        //When positive button is clicked, pop the portfolio up with the passed intent data
+//                        case DialogInterface.BUTTON_POSITIVE:
+//                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+//                            alertDialogBuilder
+//                                    .setCancelable(false)
+//                                    .setPositiveButton(R.string.showPortfolio,
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    Intent i = new Intent(context, PortfolioActivity.class);
+//                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
+//                                                    if(!moneyLeft.equals(""))
+//                                                        i.putExtra("cashleft",moneyLeft);
+//                                                    if(!errorMsg.equals(""))
+//                                                        i.putExtra("error",errorMsg);
+//                                                    //Pass the data from here to the portfolio activity
+//                                                    ///WHY CANT I DO THIS
+//                                                    context.startActivity(i);
+//                                                }
+//                                            })
+//                                    .setNegativeButton(R.string.cancel,
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    dialog.cancel();
+//                                                }
+//                                            });
+//                            AlertDialog alertDialog = alertDialogBuilder.create();
+//                            alertDialog.show();
+//                            //launch activity
+//                            break;
+//
+//                        case DialogInterface.BUTTON_NEGATIVE:
+//                            dialog.dismiss();
+//                            break;
+//                    }
+//                }
+//            };
+            new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        //When positive button is clicked, pop the portfolio up with the passed intent data
-                        case DialogInterface.BUTTON_POSITIVE:
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                            alertDialogBuilder
-                                    .setCancelable(false)
-                                    .setPositiveButton(R.string.showPortfolio,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    Intent i = new Intent(context, PortfolioActivity.class);
-                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
-                                                    if(!moneyLeft.equals(""))
-                                                        i.putExtra("cashleft",moneyLeft);
-                                                    if(!errorMsg.equals(""))
-                                                        i.putExtra("error",errorMsg);
-                                                    //Pass the data from here to the portfolio activity
-                                                    ///WHY CANT I DO THIS
-                                                    context.startActivity(i);
-                                                }
-                                            })
-                                    .setNegativeButton(R.string.cancel,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-                            alertDialog.show();
-                            //launch activity
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dialog.dismiss();
-                            break;
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage + moneyLeft + "$." + R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, this)
+                            .setNegativeButton(R.string.No, this).show();
                 }
             };
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage + moneyLeft + "$." + R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, dialogClickListener)
-                    .setNegativeButton(R.string.No, dialogClickListener).show();
-
         }
 
     }
