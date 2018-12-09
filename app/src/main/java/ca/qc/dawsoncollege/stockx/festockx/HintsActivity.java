@@ -49,7 +49,8 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Initializes the necessary variables for firebase
+     * Initializes the necessary variables for Firebase
+     * @author Zhi Jie Cao
      */
     protected void initializeFirebase(){
         FirebaseApp.initializeApp(this);
@@ -80,7 +81,7 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Fetches the info from the Database and display
+     * Fetches the info from the Database and display them,
      * @author Zhi Jie Cao
      */
     protected void fetchDatabaseInfo(){
@@ -114,7 +115,7 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Displays the hint object in the activity.
+     * Displays the hint object into the activity.
      * @param hint
      */
     protected void displayData(final Hint hint){
