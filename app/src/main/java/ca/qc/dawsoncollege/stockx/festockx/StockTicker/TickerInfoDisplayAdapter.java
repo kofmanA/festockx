@@ -46,8 +46,8 @@ import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
-    private String errorMsg;
-    private String moneyLeft;
+    private String errorMsg = "";
+    private String moneyLeft = "";
     private String JWTToken;
     private String stockName;
     private String numStocksToBuy;
@@ -102,7 +102,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
                                     //LOGIN, retreive JWT Token
                                     if (netInfo != null && netInfo.isConnected()) {
-                                        new Request().execute();
+                                        new Request().execute(authData);
                                     }
 
                                     //Get number of stocks to buy and the name of the stock they want to purchase
@@ -248,7 +248,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                                                         i.putExtra("error",errorMsg);
                                                     //Pass the data from here to the portfolio activity
                                                     ///WHY CANT I DO THIS
-                                                    startActivity(i);
+                                                    context.startActivity(i);
                                                 }
                                             })
                                     .setNegativeButton(R.string.cancel,
