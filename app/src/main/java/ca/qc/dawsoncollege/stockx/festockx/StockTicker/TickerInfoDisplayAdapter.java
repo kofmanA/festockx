@@ -187,12 +187,21 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         String loginUrl = "";
 
         //change to heroku URL for later
-        String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName + "&bearer=" + JWTToken;
 
+        String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName + "&bearer=" + JWTToken;
+        JSONObject tickerQuantity = new JSONObject();
+        try {
+            tickerQuantity.put("quantity", numStocksToBuy);
+            tickerQuantity.put("ticker",stockName);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        Log.d("URLUSED",url);
         ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
-            new BuyStock().execute(url);
+            new BuyStock().execute(tickerQuantity.toString());
         }
     }
 
@@ -201,7 +210,8 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
         protected void onPostExecute(String result) {
             try {
-                Log.d("result: ", result + "");
+                JSONObject json = new JSONObject(result);
+                Log.d("resultt: ", result + "");
                 jsonObj = new JSONObject(result);
                 Log.d("json from request: ", jsonObj + "");
                 // Intent i = new Intent(this, PortolioActivity.class);s
@@ -222,12 +232,11 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
 
         @Override
-        protected String doInBackground(String... urls) {
-
+        protected String doInBackground(String... jsonObjects){
             HttpURLConnection connection = null;
             InputStream instream = null;
             try {
-                URL url = new URL(urls[0]); //HTTP/1.1
+                URL url = new URL("http://stockxportfolio.herokuapp.com/api/api/buy"); //HTTP/1.1
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(false);
@@ -238,8 +247,10 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
                 connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(json.toString());
-                writer.flush();
+                    Log.d("JSON From user",jsonObjects[0].toString());
+                    writer.write(jsonObjects[0].toString());
+                    writer.flush();
+
 
                 connection.connect();
 
@@ -247,7 +258,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 Log.d("RESPONSE", "doInBackground: " + response);
                 if (response == HttpURLConnection.HTTP_OK) {
                     instream = connection.getInputStream();
-
                     return readIt(instream);
                 } else {
                     this.cancel(true);
@@ -427,6 +437,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             totalRead += bytesRead;
         }
         writer.flush();
+        Log.d("Parsed info",new String(byteArrayOutputStream.toString()));
         return new String(byteArrayOutputStream.toString());
     }
 
