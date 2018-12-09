@@ -183,7 +183,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     public void getCashLeft(ViewGroup parent, Holder holder) {
         String loginUrl = "";
 
-        String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName + "&bearer=" + JWTToken;
         JSONObject tickerQuantity = new JSONObject();
         try {
             tickerQuantity.put("quantity", numStocksToBuy);
@@ -243,7 +242,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
                 connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                    writer.write(jsonObjects[0].toString());
+                    writer.write(jsonObjects[0]);
                     writer.flush();
 
                 connection.connect();
@@ -279,13 +278,16 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             return "";
         }
 
+        /**Summary: Displays snackbar after purchase is done
+         *
+         * @param moneyLeft
+         * @param context
+         * @author Simon Guevara-Ponce
+         */
         private void popUpMoneyDialog(String moneyLeft,Context context) {
-
-
             CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
-
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+moneyLeft+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft+" "+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -293,7 +295,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                      context.startActivity(i);
                 }
             });
-            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.setActionTextColor(context.getResources().getColor(R.color.accent6));
             snackbar.show();
         }
 

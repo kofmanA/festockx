@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/coordinatorLayoutPortfolio"
+
     android:layout_height="match_parent"
     android:layout_margin="20dp"
     android:background="@color/accent6"
     tools:context=".Portfolio.PortfolioActivity">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,4 +34,6 @@
             android:id="@+id/ownedStockRecyclerView">
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
