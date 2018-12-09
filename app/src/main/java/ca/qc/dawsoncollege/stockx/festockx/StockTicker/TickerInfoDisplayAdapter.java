@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v7.app.*;
 import android.support.v4.*;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -218,7 +219,13 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 if (jsonObj.has("cashleft")) {
                     moneyLeft = jsonObj.getString("cashleft");
                     //   i.putExtra("cashleft",moneyLeft);
-                    popUpMoneyDialog(moneyLeft,context);
+                    //Round the number
+                    CharSequence text = "You have " + moneyLeft + "$ remaining in your account";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                   // popUpMoneyDialog(moneyLeft,context);
                 } else if (jsonObj.has("error")) {
                     errorMsg = jsonObj.getString("error");
                     // i.putExtra("error",errorMsg);
@@ -287,54 +294,56 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         }
 
         private void popUpMoneyDialog(String moneyLeft,Context context) {
-//            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    switch (which) {
-//                        //When positive button is clicked, pop the portfolio up with the passed intent data
-//                        case DialogInterface.BUTTON_POSITIVE:
-//                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-//                            alertDialogBuilder
-//                                    .setCancelable(false)
-//                                    .setPositiveButton(R.string.showPortfolio,
-//                                            new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                    Intent i = new Intent(context, PortfolioActivity.class);
-//                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
-//                                                    if(!moneyLeft.equals(""))
-//                                                        i.putExtra("cashleft",moneyLeft);
-//                                                    if(!errorMsg.equals(""))
-//                                                        i.putExtra("error",errorMsg);
-//                                                    //Pass the data from here to the portfolio activity
-//                                                    ///WHY CANT I DO THIS
-//                                                    context.startActivity(i);
-//                                                }
-//                                            })
-//                                    .setNegativeButton(R.string.cancel,
-//                                            new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                    dialog.cancel();
-//                                                }
-//                                            });
-//                            AlertDialog alertDialog = alertDialogBuilder.create();
-//                            alertDialog.show();
-//                            //launch activity
-//                            break;
-//
-//                        case DialogInterface.BUTTON_NEGATIVE:
-//                            dialog.dismiss();
-//                            break;
-//                    }
-//                }
-//            };
-            new DialogInterface.OnClickListener() {
+
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage + moneyLeft + "$." + R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, this)
-                            .setNegativeButton(R.string.No, this).show();
+                    switch (which) {
+                        //When positive button is clicked, pop the portfolio up with the passed intent data
+                        case DialogInterface.BUTTON_POSITIVE:
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                            alertDialogBuilder
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.showPortfolio,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent i = new Intent(context, PortfolioActivity.class);
+                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
+                                                    if(!moneyLeft.equals(""))
+                                                        i.putExtra("cashleft",moneyLeft);
+                                                    if(!errorMsg.equals(""))
+                                                        i.putExtra("error",errorMsg);
+                                                    //Pass the data from here to the portfolio activity
+                                                    ///WHY CANT I DO THIS
+                                                    context.startActivity(i);
+                                                }
+                                            })
+                                    .setNegativeButton(R.string.cancel,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                            //launch activity
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dialog.dismiss();
+                            break;
+                    }
                 }
             };
+//            new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                    builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage + moneyLeft + "$." + R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, this)
+//                            .setNegativeButton(R.string.No, this).show();
+//                }
+//            };
         }
 
     }
