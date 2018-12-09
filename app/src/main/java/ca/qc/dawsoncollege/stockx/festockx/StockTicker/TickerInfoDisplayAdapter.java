@@ -1,14 +1,19 @@
 package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
 import ca.qc.dawsoncollege.stockx.festockx.Portfolio.PortfolioActivity;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -88,7 +93,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                     .setPositiveButton(R.string.buyStock,
                             (dialog, id) -> {
 
-                                Log.d("Click works","click");
                                 //GET USER INFO
                                 JSONObject authenticationJSON = new JSONObject();
                                 try {
@@ -177,14 +181,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     }
 
     public void getCashLeft(ViewGroup parent, Holder holder) {
-        /**
-         * TODO:
-         *\
-         * Display resulted information that was retreived from the response, send intent to PortfolioActivity with button click
-         */
         String loginUrl = "";
-
-        //change to heroku URL for later
 
         String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName + "&bearer=" + JWTToken;
         JSONObject tickerQuantity = new JSONObject();
@@ -195,7 +192,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             e.printStackTrace();
         }
 
-        Log.d("URLUSED",url);
         ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
@@ -209,23 +205,13 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         protected void onPostExecute(String result) {
             try {
                 JSONObject json = new JSONObject(result);
-                Log.d("resultt: ", result);
                 jsonObj = new JSONObject(result);
-                Log.d("json from request: ", jsonObj + "");
-                // Intent i = new Intent(this, PortolioActivity.class);s
+
                 if (jsonObj.has("cashleft")) {
                     moneyLeft = jsonObj.getString("cashleft");
-                    //   i.putExtra("cashleft",moneyLeft);
-                    //Round the number
-                    CharSequence text = "You have " + moneyLeft + "$ remaining in your account";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                   // popUpMoneyDialog(moneyLeft,context);
+                    popUpMoneyDialog(moneyLeft,context);
                 } else {
                     String error = jsonObj.getString("error");
-                    Log.d("Error in JSON","error");
                     CharSequence text = "ERROR: " + errorMsg;
                     int duration = Toast.LENGTH_SHORT;
 
@@ -257,14 +243,12 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
                 connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                    Log.d("JSON From user",jsonObjects[0].toString());
                     writer.write(jsonObjects[0].toString());
                     writer.flush();
 
                 connection.connect();
 
                 int response = connection.getResponseCode();
-                Log.d("RESPONSE", "doInBackground: " + response);
                 if (response == HttpURLConnection.HTTP_OK) {
                     instream = connection.getInputStream();
                     return readIt(instream);
@@ -297,54 +281,20 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
         private void popUpMoneyDialog(String moneyLeft,Context context) {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        //When positive button is clicked, pop the portfolio up with the passed intent data
-                        case DialogInterface.BUTTON_POSITIVE:
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                            alertDialogBuilder
-                                    .setCancelable(false)
-                                    .setPositiveButton(R.string.showPortfolio,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    Intent i = new Intent(context, PortfolioActivity.class);
-                                                    //If there's an error, set an error intent, if not, set the intent of the cashleft of the user
-                                                    if(!moneyLeft.equals(""))
-                                                        i.putExtra("cashleft",moneyLeft);
-                                                    if(!errorMsg.equals(""))
-                                                        i.putExtra("error",errorMsg);
-                                                    //Pass the data from here to the portfolio activity
-                                                    ///WHY CANT I DO THIS
-                                                    context.startActivity(i);
-                                                }
-                                            })
-                                    .setNegativeButton(R.string.cancel,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-                            alertDialog.show();
-                            //launch activity
-                            break;
 
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dialog.dismiss();
-                            break;
-                    }
+            CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
+
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+moneyLeft+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                     Intent i = new Intent(context, PortfolioActivity.class);
+                     context.startActivity(i);
                 }
-            };
-//            new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                    builder.setTitle(R.string.moneyLeftDialogTitle).setMessage(R.string.moneyLeftDialogMessage + moneyLeft + "$." + R.string.moneyLeftDialogGoTo).setPositiveButton(R.string.Yes, this)
-//                            .setNegativeButton(R.string.No, this).show();
-//                }
-//            };
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
         }
 
     }
@@ -376,11 +326,9 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         @Override
         protected void onPostExecute(String result){
             try {
-                Log.d("TEst", "onPostExecute: " + result);
                 json = new JSONObject(result);
                 JWTToken = json.getString("access_token");
 
-                Log.d("TOKEN", "onPostExecute: " + JWTToken);
             } catch (JSONException e) {
                 e.printStackTrace();
             };
@@ -399,12 +347,10 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 connection.setDoOutput(false);
                 connection.setReadTimeout(10000);
                 connection.setConnectTimeout(10000);
-                Log.d("METHOD", "doInBackground: " + data[0].get("method"));
                 connection.setRequestMethod(data[0].get("method"));
                 connection.setRequestProperty("Content-Type", "application/json");
 
                 connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
-                Log.d("DATA", "doInBackground: " + data[0].get("data"));
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
                 writer.write(data[0].get("data"));
                 writer.flush();
@@ -412,7 +358,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                 connection.connect();
 
                 int response = connection.getResponseCode();
-                Log.d("RESPONSE", "doInBackground: " + response);
                 if (response == HttpURLConnection.HTTP_OK) {
                     instream = connection.getInputStream();
 
@@ -439,7 +384,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                     Log.e("Error", "problem closing input stream or html connection");
                 }
             }
-            Log.d("NULL", "doInBackground: REACHED NULL");
             return "";
         }
     }

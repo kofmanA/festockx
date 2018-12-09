@@ -118,5 +118,6 @@
     <string name="sellStockMessage">How many stocks would you like to sell?</string>
     <string name="sell">Sell</string>
     <string name="portfolio">Stock Portfolio</string>
-    <string name="showPortfolio">Show Portfolio</string>
+    <string name="showPortfolioSnack"> Would you like to open your portfolio?</string>
+    <string name="showPortfolio"> Show Portfolio</string>
 </resources>
