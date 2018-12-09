@@ -179,12 +179,9 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     public void getCashLeft(ViewGroup parent, Holder holder) {
         /**
          * TODO:
-         * Create second Async Class to log user in and receive bearer token
-         * Send email and password in a json object
-         * Get back the value from the access_token json object
-         * If there is not a valid login, the json object is called error, so check for its existence
+         *\
+         * Display resulted information that was retreived from the response, send intent to PortfolioActivity with button click
          */
-        //Get token of logged in user from settings
         String loginUrl = "";
 
         //change to heroku URL for later
@@ -212,7 +209,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         protected void onPostExecute(String result) {
             try {
                 JSONObject json = new JSONObject(result);
-                Log.d("resultt: ", result + "");
+                Log.d("resultt: ", result);
                 jsonObj = new JSONObject(result);
                 Log.d("json from request: ", jsonObj + "");
                 // Intent i = new Intent(this, PortolioActivity.class);s
@@ -226,8 +223,14 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                    // popUpMoneyDialog(moneyLeft,context);
-                } else if (jsonObj.has("error")) {
-                    errorMsg = jsonObj.getString("error");
+                } else {
+                    String error = jsonObj.getString("error");
+                    Log.d("Error in JSON","error");
+                    CharSequence text = "ERROR: " + errorMsg;
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                     // i.putExtra("error",errorMsg);
                     // startActivity(i);
 
@@ -257,7 +260,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                     Log.d("JSON From user",jsonObjects[0].toString());
                     writer.write(jsonObjects[0].toString());
                     writer.flush();
-
 
                 connection.connect();
 
@@ -294,7 +296,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         }
 
         private void popUpMoneyDialog(String moneyLeft,Context context) {
-
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -348,87 +349,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
     }
 
-    private String downloadUrl(String myUrl) throws IOException {
-        Log.d(TAG,"Downloading from url: " + myUrl);
-        InputStream is = null;
-        HttpURLConnection conn = null;
-        URL url = new URL(myUrl);
-        try {
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            //Allow input
-            conn.setDoInput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.connect();
-
-            int response = conn.getResponseCode();
-            if (response != HttpsURLConnection.HTTP_OK) {
-                return "Server returned: " + response + " aborting read";
-            }
-            //The request is fine
-            is = conn.getInputStream();
-            return readIt(is);
-        } catch (IOException e) {
-            Log.e(TAG, "IO exception in bg");
-            Log.getStackTraceString(e);
-            throw e;
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException ignore) {
-                }
-                if (conn != null)
-                    try {
-                        conn.disconnect();
-                    } catch (IllegalStateException ignore) {
-                    }
-            }
-        }
-    }
-
-    private String getBearerToken(String email, String pword) throws IOException {
-        InputStream is = null;
-        HttpURLConnection conn = null;
-        URL url = new URL(email + pword);
-        try {
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            //Allow input
-            conn.setDoInput(true);
-            conn.setRequestProperty("Authorization:", "Bearer ");
-            conn.connect();
-
-            int response = conn.getResponseCode();
-            if (response != HttpsURLConnection.HTTP_OK) {
-                return "Server returned: " + response + " aborting read";
-            }
-            //The request is fine
-            is = conn.getInputStream();
-            return readIt(is);
-        } catch (IOException e) {
-            Log.e(TAG, "IO exception in bg");
-            Log.getStackTraceString(e);
-            throw e;
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException ignore) {
-                }
-                if (conn != null)
-                    try {
-                        conn.disconnect();
-                    } catch (IllegalStateException ignore) {
-                    }
-            }
-        }
-    }
-
     public String readIt(InputStream is) throws IOException, UnsupportedEncodingException {
         int bytesRead;
         int totalRead = 0;
@@ -450,7 +370,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         return new String(byteArrayOutputStream.toString());
     }
 
-    //This class should take the email and password and return the token to class's JWTToken field
     class Request extends AsyncTask<HashMap<String, String>, Void, String> {
 
         //Cache the JWT Token received from the login
