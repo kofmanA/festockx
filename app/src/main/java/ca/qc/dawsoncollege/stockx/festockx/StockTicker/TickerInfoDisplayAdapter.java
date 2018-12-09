@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -46,12 +47,14 @@ import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
+
     private String errorMsg = "";
     private String moneyLeft = "";
     private String JWTToken;
     private String stockName;
     private String numStocksToBuy;
     private JSONObject jsonObj;
+    private JSONObject json;
     Context context;
     List<TickerStock> tickers;
     private final String TAG = "issue";
@@ -184,7 +187,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         String loginUrl = "";
 
         //change to heroku URL for later
-        String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName;
+        String url = "http://stockxportfolio.herokuapp.com/api/api/buy?quantity=" + numStocksToBuy + "&name=" + stockName + "&bearer=" + JWTToken;
 
         ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
@@ -200,6 +203,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             try {
                 Log.d("result: ", result + "");
                 jsonObj = new JSONObject(result);
+                Log.d("json from request: ", jsonObj + "");
                 // Intent i = new Intent(this, PortolioActivity.class);s
                 if (jsonObj.has("cashleft")) {
                     moneyLeft = jsonObj.getString("cashleft");
@@ -219,13 +223,57 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
 
         @Override
         protected String doInBackground(String... urls) {
+
+            HttpURLConnection connection = null;
+            InputStream instream = null;
             try {
-                Log.e(TAG, "DOwnloading URL "+ urls[0]);
-                return downloadUrl(urls[0]);
+                URL url = new URL(urls[0]); //HTTP/1.1
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(false);
+                connection.setReadTimeout(10000);
+                connection.setConnectTimeout(10000);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json");
+
+                connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
+                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+                writer.write(json.toString());
+                writer.flush();
+
+                connection.connect();
+
+                int response = connection.getResponseCode();
+                Log.d("RESPONSE", "doInBackground: " + response);
+                if (response == HttpURLConnection.HTTP_OK) {
+                    instream = connection.getInputStream();
+
+                    return readIt(instream);
+                } else {
+                    this.cancel(true);
+                    return "";
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             } catch (IOException e) {
-                Log.e(TAG, "exception thrown by download");
-                return "Unable to retrieve web page. URL may be invalid.";
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (instream != null && connection != null) {
+                        instream.close();
+                        connection.disconnect();
+                    }
+                }
+                catch(Exception e){
+                    Log.e("Error", "problem closing input stream or html connection");
+                }
             }
+            Log.d("NULL", "doInBackground: REACHED NULL");
+            return "";
         }
 
         private void popUpMoneyDialog(String moneyLeft,Context context) {
@@ -282,6 +330,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     }
 
     private String downloadUrl(String myUrl) throws IOException {
+        Log.d(TAG,"Downloading from url: " + myUrl);
         InputStream is = null;
         HttpURLConnection conn = null;
         URL url = new URL(myUrl);
@@ -289,10 +338,10 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod("POST");
             //Allow input
             conn.setDoInput(true);
-            conn.setRequestProperty("Authorization:", "Bearer ");
+            conn.setRequestProperty("Content-Type", "application/json");
             conn.connect();
 
             int response = conn.getResponseCode();
@@ -389,8 +438,9 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         protected void onPostExecute(String result){
             try {
                 Log.d("TEst", "onPostExecute: " + result);
-                JSONObject json = new JSONObject(result);
+                json = new JSONObject(result);
                 JWTToken = json.getString("access_token");
+
                 Log.d("TOKEN", "onPostExecute: " + JWTToken);
             } catch (JSONException e) {
                 e.printStackTrace();
