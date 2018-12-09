@@ -120,6 +120,7 @@
         android:layout_marginLeft="10dp"
         android:background="@color/accent6"
         android:drawableLeft="@drawable/presentation_icon"
+        android:onClick="launchPortfolio"
         />
     </LinearLayout>
 </LinearLayout>
