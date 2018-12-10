@@ -50,6 +50,7 @@ import javax.net.ssl.HttpsURLConnection;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
@@ -92,12 +93,12 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                     .setCancelable(true)
                     .setPositiveButton(R.string.buyStock,
                             (dialog, id) -> {
-
-                                //GET USER INFO
+                                SharedPreferences prefs = context.getSharedPreferences(
+                                        "Settings", MODE_PRIVATE);
                                 JSONObject authenticationJSON = new JSONObject();
                                 try {
-                                    authenticationJSON.put("email", "asd@asd.asd");
-                                    authenticationJSON.put("password", "asdasdasd");
+                                    authenticationJSON.put("email", prefs.getString("eAddress",null));
+                                    authenticationJSON.put("password", prefs.getString("password",null));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

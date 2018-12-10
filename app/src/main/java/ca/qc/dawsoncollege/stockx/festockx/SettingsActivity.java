@@ -151,7 +151,7 @@ public class SettingsActivity extends MenuActivity {
     }
 
     public void clickRegister(View v){
-        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("stockxportfolio.herokuapp.cpm"));
+        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stockxportfolio.herokuapp.com/register"));
         startActivity(link);
     }
 

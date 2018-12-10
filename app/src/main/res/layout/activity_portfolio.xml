@@ -26,6 +26,14 @@
             android:textSize="25dp"
             android:background="@color/accent7"
             android:text="@string/portfolio"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/balanceid"
+            android:textSize="25dp"
+            android:background="@color/accent7"
+            android:text="@string/balance"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
