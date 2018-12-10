@@ -48,14 +48,13 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;
+import ca.qc.dawsoncollege.stockx.festockx.Request.Request;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDisplayAdapter.Holder> {
-
-    private String errorMsg = "";
     private String moneyLeft = "";
     private String JWTToken;
     private String stockName;
@@ -65,7 +64,6 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     Context context;
     List<TickerStock> tickers;
     private final String TAG = "issue";
-    private int BUFFER = 1024;
 
 
     public TickerInfoDisplayAdapter(Context context, List<TickerStock> tickers) {
@@ -106,21 +104,39 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                                 authData.put("url", "http://stockxportfolio.herokuapp.com/api/auth/login");
                                 authData.put("method", "POST");
                                 authData.put("data", authenticationJSON.toString());
-
+                                authData.put("token", JWTToken);
                                 ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                                 NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
 
                                 //LOGIN, retreive JWT Token
                                 if (netInfo != null && netInfo.isConnected()) {
-                                    new Request().execute(authData);
+                                    new Request(){
+                                        @Override
+                                        protected void onPostExecute(String result){
+                                            try {
+                                                json = new JSONObject(result);
+                                                if(json.has("access_token")) {
+                                                    JWTToken = json.getString("access_token");
+                                                    //Get number of stocks to buy and the name of the stock they want to purchase
+                                                    numStocksToBuy = userInput.getText().toString();
+                                                    stockName = holder.symbolName.getText().toString();
+                                                } else if(json.has("error")) {
+                                                    String errorMsg = json.getString("error");
+                                                    CharSequence text = "ERROR: " + errorMsg;
+
+                                                    Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+                                                    toast.show();
+                                                }
+                                                //Send Api request to our own API with numStocks and stockName
+                                                getCashLeft(parent,holder);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            };
+                                        }
+                                    }.execute(authData);
                                 }
 
-                                //Get number of stocks to buy and the name of the stock they want to purchase
-                                numStocksToBuy = userInput.getText().toString();
-                                stockName = holder.symbolName.getText().toString();
 
-                                //Send Api request to our own API with numStocks and stockName
-                                getCashLeft(parent,holder);
                             })
                     .setNegativeButton(R.string.cancel,
                             new DialogInterface.OnClickListener() {
@@ -182,9 +198,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     }
 
     public void getCashLeft(ViewGroup parent, Holder holder) {
-        String loginUrl = "";
-
-        JSONObject tickerQuantity = new JSONObject();
+        final JSONObject tickerQuantity = new JSONObject();
         try {
             tickerQuantity.put("quantity", numStocksToBuy);
             tickerQuantity.put("ticker",stockName);
@@ -195,199 +209,54 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         ConnectivityManager connMgr = (ConnectivityManager) parent.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
-            new BuyStock().execute(tickerQuantity.toString());
-        }
-    }
-
-
-    class BuyStock extends AsyncTask<String, Void, String> {
-
-        protected void onPostExecute(String result) {
-            try {
-                JSONObject json = new JSONObject(result);
-                jsonObj = new JSONObject(result);
-
-                if (jsonObj.has("cashleft")) {
-                    moneyLeft = jsonObj.getString("cashleft");
-                    popUpMoneyDialog(moneyLeft,context);
-                } else {
-                    String error = jsonObj.getString("error");
-                    CharSequence text = "ERROR: " + errorMsg;
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    // i.putExtra("error",errorMsg);
-                    // startActivity(i);
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        @Override
-        protected String doInBackground(String... jsonObjects){
-            HttpURLConnection connection = null;
-            InputStream instream = null;
-            try {
-                URL url = new URL("http://stockxportfolio.herokuapp.com/api/api/buy"); //HTTP/1.1
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(false);
-                connection.setReadTimeout(10000);
-                connection.setConnectTimeout(10000);
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-
-                connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                    writer.write(jsonObjects[0]);
-                    writer.flush();
-
-                connection.connect();
-
-                int response = connection.getResponseCode();
-                if (response == HttpURLConnection.HTTP_OK) {
-                    instream = connection.getInputStream();
-                    return readIt(instream);
-                } else {
-                    this.cancel(true);
-                    return "";
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (instream != null && connection != null) {
-                        instream.close();
-                        connection.disconnect();
-                    }
-                }
-                catch(Exception e){
-                    Log.e("Error", "problem closing input stream or html connection");
-                }
-            }
-            Log.d("NULL", "doInBackground: REACHED NULL");
-            return "";
-        }
-
-        /**Summary: Displays snackbar after purchase is done
-         *
-         * @param moneyLeft
-         * @param context
-         * @author Simon Guevara-Ponce
-         */
-        private void popUpMoneyDialog(String moneyLeft,Context context) {
-            CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft+" "+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
-            snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {
+            final HashMap<String, String> buyData = new HashMap<>();
+            buyData.put("url", "http://stockxportfolio.herokuapp.com/api/api/buy");
+            buyData.put("method", "POST");
+            buyData.put("data", tickerQuantity.toString());
+            buyData.put("token", JWTToken);
+            new Request(){
                 @Override
-                public void onClick(View view) {
-                     Intent i = new Intent(context, PortfolioActivity.class);
-                     context.startActivity(i);
-                }
-            });
-            snackbar.setActionTextColor(context.getResources().getColor(R.color.accent6));
-            snackbar.show();
-        }
+                protected void onPostExecute(String result) {
+                    try {
 
-    }
+                        Log.d(TAG, "onPostExecute: " + result);
+                        json = new JSONObject(result);
+                        if (json.has("cashleft")) {
+                            moneyLeft = json.getString("cashleft");
+                            popUpMoneyDialog(moneyLeft,context);
+                        } else if(json.has("error")) {
+                            String errorMsg = json.getString("error");
+                            CharSequence text = "ERROR: " + errorMsg;
 
-    public String readIt(InputStream is) throws IOException, UnsupportedEncodingException {
-        int bytesRead;
-        int totalRead = 0;
-        byte[] buffer = new byte[BUFFER];
-        //For data from the server
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(is);
-
-        //Collect data in our output stream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        DataOutputStream writer = new DataOutputStream(byteArrayOutputStream);
-
-        while ((bytesRead = bufferedInputStream.read(buffer)) != -1) {
-            writer.write(buffer);
-            totalRead += bytesRead;
-        }
-        writer.flush();
-        Log.d("Parsed info",new String(byteArrayOutputStream.toString()));
-        return new String(byteArrayOutputStream.toString());
-    }
-
-    class Request extends AsyncTask<HashMap<String, String>, Void, String> {
-
-        //Cache the JWT Token received from the login
-        @Override
-        protected void onPostExecute(String result){
-            try {
-                json = new JSONObject(result);
-                JWTToken = json.getString("access_token");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            };
-        }
-
-
-        //Send the request to the login API to get the JWT token
-        @Override
-        protected String doInBackground(HashMap<String, String>... data) {
-            HttpURLConnection connection = null;
-            InputStream instream = null;
-            try {
-                URL url = new URL(data[0].get("url")); //HTTP/1.1
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(false);
-                connection.setReadTimeout(10000);
-                connection.setConnectTimeout(10000);
-                connection.setRequestMethod(data[0].get("method"));
-                connection.setRequestProperty("Content-Type", "application/json");
-
-                connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(data[0].get("data"));
-                writer.flush();
-
-                connection.connect();
-
-                int response = connection.getResponseCode();
-                if (response == HttpURLConnection.HTTP_OK) {
-                    instream = connection.getInputStream();
-
-                    return readIt(instream);
-                } else {
-                    this.cancel(true);
-                    return "";
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (instream != null && connection != null) {
-                        instream.close();
-                        connection.disconnect();
+                            Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    Log.e("Error", "problem closing input stream or html connection");
                 }
-            }
-            return "";
+            }.execute(buyData);
         }
+    }
+
+    /**Summary: Displays snackbar after purchase is done
+     *
+     * @param moneyLeft
+     * @param context
+     * @author Simon Guevara-Ponce
+     */
+    private void popUpMoneyDialog(String moneyLeft,Context context) {
+        CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft+" "+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, PortfolioActivity.class);
+                context.startActivity(i);
+            }
+        });
+        snackbar.setActionTextColor(context.getResources().getColor(R.color.accent6));
+        snackbar.show();
     }
 }

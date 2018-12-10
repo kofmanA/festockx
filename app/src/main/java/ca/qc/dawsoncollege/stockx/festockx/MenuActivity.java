@@ -14,6 +14,7 @@ public class MenuActivity extends AppCompatActivity {
      * creates the options menu
      * @param menu
      * @return
+     * @author Felicia
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -27,6 +28,7 @@ public class MenuActivity extends AppCompatActivity {
      * detects which element in the menu was clicked and performs the appropriate action for what what selected
      * @param item
      * @return
+     * @author Felicia
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
