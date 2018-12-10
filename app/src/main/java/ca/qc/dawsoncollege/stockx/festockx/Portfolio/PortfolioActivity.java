@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -54,23 +55,29 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
     private String JWTToken = null;
     private OwnedStockAdapter adapt;
     private Context context;
+    private TextView balance;
+    private RecyclerView recyclerView;
+    private HashMap<String, Integer> ownedStocks;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
         this.context = this;
-
-        final RecyclerView recyclerView = findViewById(R.id.ownedStockRecyclerView);
+        balance = ((Activity) context).findViewById(R.id.balanceid);
+        this.recyclerView = findViewById(R.id.ownedStockRecyclerView);
 
         SharedPreferences sharedPreferences = PortfolioActivity.this.getSharedPreferences("Settings", MODE_PRIVATE);
         String email = sharedPreferences.getString("eAddress", "none");
         String pwd = sharedPreferences.getString("password", "asdasdasd");
 
         JSONObject authenticationJSON = new JSONObject();
+
+        SharedPreferences prefs = this.getSharedPreferences(
+                "Settings", MODE_PRIVATE);
         try {
-            authenticationJSON.put("email", "asd@asd.asd");
-            authenticationJSON.put("password", "asdasdasd");
+            authenticationJSON.put("email", prefs.getString("eAddress",null));
+            authenticationJSON.put("password", prefs.getString("password",null));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,10 +87,13 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
         authData.put("method", "POST");
         authData.put("data", authenticationJSON.toString());
 
-
         final HashMap<String, String> allStocksData = new HashMap<>();
         allStocksData.put("url", "http://stockxportfolio.herokuapp.com/api/api/allstocks");
         allStocksData.put("method", "GET");
+
+        final HashMap<String, String> balanceData = new HashMap<>();
+        balanceData.put("url", "http://stockxportfolio.herokuapp.com/api/api/getCash");
+        balanceData.put("method", "GET");
 
         new Request(){
             @Override
@@ -96,7 +106,7 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                         protected void onPostExecute(String result){
                             JSONArray json = null;
                             try {
-                                HashMap<String, Integer> ownedStocks = new HashMap<>();
+                                ownedStocks = new HashMap<>();
                                 json = new JSONArray(result);
                                 for(int i = 0; i < json.length(); i++){
                                     JSONObject object = (JSONObject) json.get(i);
@@ -113,13 +123,36 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                             }
                         };
                     }.execute(allStocksData);
+
+                    new Request(){
+                        @Override
+                        protected void onPostExecute(String result){
+                            try {
+                                Log.d("HELLO",result);
+                                JSONObject json = new JSONObject(result);
+                                Log.d("HELLO",json.keys().next().toString());
+                                json = new JSONObject(result);
+                                if (json.has("balance")) {
+                                    String moneyLeft = json.getString("balance");
+                                    balance.setText(balance.getText()+": "+moneyLeft+"$");
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        };
+                    }.execute(balanceData);
+
                 } catch (JSONException e) {
                     Toast.makeText(PortfolioActivity.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
                 }
             }
 
         }.execute(authData);
+
+
     }
+
 
     class Request extends AsyncTask<HashMap<String, String>, Void, String> {
 
@@ -301,7 +334,6 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
 
                 try {
                     JSONObject json = new JSONObject(result);
-                    HashMap<String, Integer> ownedStocks = new HashMap<>();
                     json = new JSONObject(result);
                     if (json.has("cashleft")) {
                        String moneyLeft = json.getString("cashleft");
@@ -311,6 +343,18 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                                 .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" "+moneyLeft, Snackbar.LENGTH_LONG);
 
                         snackbar.show();
+                        //update balance
+                        balance.setText(context.getString(R.string.balance) + ": " + moneyLeft);
+                        //update map
+                        //set adapter
+                        int count = ownedStocks.remove(data[0]);
+                        if(count - Integer.parseInt(data[1]) > 0) {
+                            ownedStocks.put(data[0], count - Integer.parseInt(data[1]));
+                        }
+                        adapt = new OwnedStockAdapter(PortfolioActivity.this, ownedStocks);
+                        recyclerView.setAdapter(adapt);
+                        adapt.setRecyclerClick(PortfolioActivity.this);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(PortfolioActivity.this));
                     }
 
                 } catch (JSONException e) {
