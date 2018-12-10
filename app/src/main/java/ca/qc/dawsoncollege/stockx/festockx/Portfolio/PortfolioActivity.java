@@ -3,10 +3,15 @@ package ca.qc.dawsoncollege.stockx.festockx.Portfolio;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,11 +53,13 @@ import ca.qc.dawsoncollege.stockx.festockx.SQLite.ItemNoteAdapter;
 public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.RecyclerViewClickListener {
     private String JWTToken = null;
     private OwnedStockAdapter adapt;
+    private Context context;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
+        this.context = this;
 
         final RecyclerView recyclerView = findViewById(R.id.ownedStockRecyclerView);
 
@@ -132,14 +139,17 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                 connection.setDoOutput(false);
                 connection.setReadTimeout(10000);
                 connection.setConnectTimeout(10000);
-                Log.d("METHOD", "doInBackground: " + data[0].get("method"));
                 connection.setRequestMethod(data[0].get("method"));
                 connection.setRequestProperty("Content-Type", "application/json");
 
                 if(JWTToken != null){
                     connection.setRequestProperty("Authorization", "Bearer " + JWTToken);
+                    if(data[0].get("data")!=null){
+                        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+                        writer.write(data[0].get("data"));
+                        writer.flush();
+                    }
                 } else {
-                    Log.d("DATA", "doInBackground: " + data[0].get("data"));
                     OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
                     writer.write(data[0].get("data"));
                     writer.flush();
@@ -149,7 +159,6 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                 connection.connect();
 
                 int response = connection.getResponseCode();
-                Log.d("RESPONSE", "doInBackground: " + response);
                 if (response == HttpURLConnection.HTTP_OK) {
                     instream = connection.getInputStream();
 
@@ -211,13 +220,15 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
         }
     }
 
-    /**Summary:
-     *
-     * @param v
-     * @param position: position of the note picked
+    /**Summary: Item click event.
+     * When clicked, displays dialog with spinner asking the amount of stock they want to sell,
+     * once the Sell button is pressed, calls the sellStock method     *
+     * @param v View clicked
+     * @param position: position of the stock picked
+     * @author Simon Guevara-Ponce
      */
     @Override
-    public void recyclerViewListClicked(View v, int position) {//
+    public void recyclerViewListClicked(View v, int position) {
         String[] data = adapt.getStock(position);
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.prompt_sellstock, null);
@@ -251,6 +262,12 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
         alertDialog.show();
     }
 
+    /**Summary: Private helper method.
+     * Takes string, returns String[] of range from 1 to range     *
+     * @param range
+     * @return  String[]
+     * @author Simon Guevara-Ponce
+     */
     private String[] getRange(String range){
         int intrange = Integer.parseInt(range);
         ArrayList<String> rangeArr = new ArrayList<String>();
@@ -260,7 +277,46 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
         return rangeArr.toArray(new String[rangeArr.size()]);
     }
 
+    /**Summary: Calls the Request class to make the async task with the proper data.
+     * Then pops up a snackbar displaying balance.     *
+     * @param data
+     * @author Simon Guevara-Ponce
+     */
     private void sellStock(String[] data){
+        final HashMap<String, String> allStocksData = new HashMap<>();
+        allStocksData.put("url", "http://stockxportfolio.herokuapp.com/api/api/sell");
+        allStocksData.put("method", "POST");
+        JSONObject tickerQuantity = new JSONObject();
+        try {
+            tickerQuantity.put("quantity", data[1]);
+            tickerQuantity.put("ticker",data[0]);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        allStocksData.put("data",tickerQuantity.toString());
 
+        new Request(){
+            @Override
+            protected void onPostExecute(String result){
+
+                try {
+                    JSONObject json = new JSONObject(result);
+                    HashMap<String, Integer> ownedStocks = new HashMap<>();
+                    json = new JSONObject(result);
+                    if (json.has("cashleft")) {
+                       String moneyLeft = json.getString("cashleft");
+                        CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutPortfolio);
+
+                        Snackbar snackbar = Snackbar
+                                .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" "+moneyLeft, Snackbar.LENGTH_LONG);
+
+                        snackbar.show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            };
+        }.execute(allStocksData);
     }
 }

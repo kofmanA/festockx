@@ -14,7 +14,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Spinner
-            android:layout_width="30sp"
+            android:minWidth="30sp"
+            android:layout_width="match_parent"
             android:id="@+id/amountSell"
             android:gravity="center"
             android:layout_weight="1"
