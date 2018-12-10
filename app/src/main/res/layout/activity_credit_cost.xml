@@ -118,7 +118,7 @@
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:gravity="center_horizontal|center"
-            android:text="Calculate"
+            android:text="@string/calculate"
             android:onClick="calculate"
             android:background="@color/accent9"
             android:layout_width="match_parent"

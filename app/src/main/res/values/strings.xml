@@ -55,6 +55,8 @@
     <string name="lastName">Last Name:</string>
     <string name="lastNameHint">Enter your last name here</string>
     <string name="emailAddress">Email Address: </string>
+    <string name="password">Password:</string>
+    <string name="register">Register:</string>
     <string name="emailAddressHint">example@gmail.com</string>
     <string name="currency">Preferred Currency:</string>
     <string name="pStockEx">Preferred Stock Exchange: </string>
@@ -106,5 +108,16 @@
     <string name="noteButton">Notes</string>
     <string name="stockQuote">Stock Quote</string>
     <string name="practice">Practice Stocks</string>
+    <string name="calculate">Calculate</string>
+    <string name="buyStock">Buy Stock</string>
+    <string name="buyStockPrompt">Enter number of selected stocks to purchase</string>
+    <string name="moneyLeftDialogTitle">Balance</string>
+    <string name="moneyLeftDialogMessage">Your current balance now is: </string>
+    <string name="moneyLeftDialogGoTo">Would you like to see your portfolio?</string>
+    <string name="sellStocksTitle">Sell your stocks</string>
+    <string name="sellStockMessage">How many stocks would you like to sell?</string>
+    <string name="sell">Sell</string>
     <string name="portfolio">Stock Portfolio</string>
+    <string name="showPortfolioSnack"> Would you like to open your portfolio?</string>
+    <string name="showPortfolio"> Show Portfolio</string>
 </resources>

@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;

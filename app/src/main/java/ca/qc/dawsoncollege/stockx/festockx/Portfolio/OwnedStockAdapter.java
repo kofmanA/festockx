@@ -9,18 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;
+import ca.qc.dawsoncollege.stockx.festockx.SQLite.ItemNoteAdapter;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteItemActivity;
 
 class OwnedStockAdapter extends RecyclerView.Adapter {
     HashMap<String, Integer> ownedStocks;
     Context context;
+    private static ItemNoteAdapter.RecyclerViewClickListener itemListener;
+
     private final LayoutInflater inflater;
 
     public OwnedStockAdapter(Context context, HashMap<String, Integer> ownedStocks){
@@ -43,15 +48,24 @@ class OwnedStockAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            //itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
+            itemListener.recyclerViewListClicked(v,this.getLayoutPosition());
         }
     }
+
+
+    public interface RecyclerViewClickListener {
+        public void recyclerViewListClicked(View v, int position);
+    }
+
+    public void setRecyclerClick(ItemNoteAdapter.RecyclerViewClickListener RVCL){
+        this.itemListener = RVCL;
+    }
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = inflater.inflate(R.layout.recyclerview_owned_stock, viewGroup, false);
-
         return new ItemViewHolder(itemView);
     }
 
@@ -74,6 +88,17 @@ class OwnedStockAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return ownedStocks.size();
+    }
+
+    public String[] getStock(int position){
+        ownedStocks.keySet();
+        List<String> keys = new ArrayList<>();
+        for(String s : ownedStocks.keySet()){
+            keys.add(s);
+        }
+        String ticker = keys.get(position);
+        int quantity = ownedStocks.get(ticker);
+        return new String[]{ticker,String.valueOf(quantity)};
     }
 
 }

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -22,6 +24,7 @@ public class SettingsActivity extends MenuActivity {
     EditText fNameET;
     EditText lNameET;
     EditText eAddressET;
+    EditText passwordET;
     Spinner pStockExSpin;
     Spinner currencySpin ;
 
@@ -33,6 +36,7 @@ public class SettingsActivity extends MenuActivity {
         fNameET = (EditText) findViewById(R.id.fnameTV);
         lNameET = (EditText) findViewById(R.id.lnameTV);
         eAddressET = (EditText) findViewById(R.id.eAddressTV);
+        passwordET = (EditText) findViewById(R.id.PasswordTV);
         pStockExSpin = (Spinner) findViewById(R.id.pStockEx);
         currencySpin = (Spinner) findViewById(R.id.curr);
         showSettings();
@@ -51,6 +55,7 @@ public class SettingsActivity extends MenuActivity {
             editor.putString("fName", fNameET.getText().toString());
             editor.putString("lName", lNameET.getText().toString());
             editor.putString("eAddress", eAddressET.getText().toString());
+            editor.putString("password", passwordET.getText().toString());
             editor.putString("pStockEx", pStockExSpin.getSelectedItem().toString());
             editor.putString("currency", currencySpin.getSelectedItem().toString());
             editor.putString("lastUpdated",new Date().toString());
@@ -72,7 +77,6 @@ public class SettingsActivity extends MenuActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "Settings", MODE_PRIVATE);
         if(prefs.contains("fName")){
-            Log.i("HELLO","saved");
             fNameET.setText(prefs.getString("fName","ERROR"));
         }
         if(prefs.contains("lName")){
@@ -144,6 +148,11 @@ public class SettingsActivity extends MenuActivity {
     protected void onStop(){
         super.onStop();
         finish();
+    }
+
+    public void clickRegister(View v){
+        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("stockxportfolio.herokuapp.cpm"));
+        startActivity(link);
     }
 
 }

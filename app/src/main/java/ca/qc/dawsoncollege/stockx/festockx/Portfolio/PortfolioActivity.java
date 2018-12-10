@@ -10,6 +10,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -29,15 +34,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
+import ca.qc.dawsoncollege.stockx.festockx.SQLite.ItemNoteAdapter;
 
-public class PortfolioActivity extends MenuActivity {
+public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.RecyclerViewClickListener {
     private String JWTToken = null;
-
+    private OwnedStockAdapter adapt;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +96,10 @@ public class PortfolioActivity extends MenuActivity {
                                     ownedStocks.put(object.getString("ticker"), object.getInt("quantity"));
                                 }
 
-                                recyclerView.setAdapter(new OwnedStockAdapter(PortfolioActivity.this, ownedStocks));
+
+                                adapt = new OwnedStockAdapter(PortfolioActivity.this, ownedStocks);
+                                recyclerView.setAdapter(adapt);
+                                adapt.setRecyclerClick(PortfolioActivity.this);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(PortfolioActivity.this));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -198,4 +211,56 @@ public class PortfolioActivity extends MenuActivity {
         }
     }
 
+    /**Summary:
+     *
+     * @param v
+     * @param position: position of the note picked
+     */
+    @Override
+    public void recyclerViewListClicked(View v, int position) {//
+        String[] data = adapt.getStock(position);
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompt_sellstock, null);
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+
+       Spinner amount = (Spinner) promptsView.findViewById(R.id.amountSell);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PortfolioActivity.this,android.R.layout.simple_spinner_dropdown_item, getRange(data[1]));
+       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        amount.setAdapter(adapter);
+        amount.setPrompt(data[1]);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton(R.string.sell,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                String input = amount.getSelectedItem().toString();
+                                sellStock(new String[] {data[0],input});
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setTitle(R.string.sellStocksTitle);
+        alertDialog.show();
+    }
+
+    private String[] getRange(String range){
+        int intrange = Integer.parseInt(range);
+        ArrayList<String> rangeArr = new ArrayList<String>();
+        for(int i=1;i<=intrange;i++){
+            rangeArr.add(String.valueOf(i));
+        }
+        return rangeArr.toArray(new String[rangeArr.size()]);
+    }
+
+    private void sellStock(String[] data){
+
+    }
 }
