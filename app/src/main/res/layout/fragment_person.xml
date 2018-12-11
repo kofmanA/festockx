@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".PersonFragment">
+    tools:context=".About.PersonFragment">
 
     <TextView
         android:id="@+id/persontv"

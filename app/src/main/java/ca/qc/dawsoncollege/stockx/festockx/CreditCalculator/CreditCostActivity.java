@@ -1,6 +1,5 @@
 package ca.qc.dawsoncollege.stockx.festockx.CreditCalculator;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +10,10 @@ import android.widget.Spinner;
 
 import org.json.JSONObject;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
-public class CreditCostActivity extends MenuActivity {
+public class CreditCostActivity extends MenuActivity  {
 
     private JSONObject jsonObj;
     private static final String TAG = "HttpURLConn";

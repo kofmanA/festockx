@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -12,24 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".AboutActivity">
-        </activity>
-        <activity android:name=".ForexActivity">
-        </activity>
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".StockTicker.StockNumberSelectActivity">
-        </activity>
+        <activity android:name=".About.AboutActivity"></activity>
+        <activity android:name=".Forex.ForexActivity"></activity>
+        <activity android:name=".Menu.SettingsActivity" />
+        <activity android:name=".StockTicker.StockNumberSelectActivity"></activity>
         <activity
             android:name=".StockTicker.TickerInputActivity"
             android:label="@string/title_activity_ticker_input" />
         <activity
             android:name=".StockTicker.ShowTickerInfoActivity"
             android:label="@string/title_activity_show_ticker_info" />
-        <activity android:name=".StockTicker.TickerInfoActivity"></activity>
-        <activity android:name=".CreditCalculator.CreditCostActivity">
-        </activity>
-        <activity android:name=".HintsActivity"></activity>
+        <activity android:name=".StockTicker.TickerInfoActivity" />
+        <activity android:name=".CreditCalculator.CreditCostActivity"></activity>
+        <activity android:name=".Hints.HintsActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
@@ -39,15 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SQLite.NoteActivity"></activity>
-
-        <activity android:name=".SQLite.NewNoteActivity"></activity>
-
-        <activity android:name=".SQLite.NoteItemActivity"></activity>
-        <activity android:name=".CreditCalculator.ShowCreditResult"></activity>
+        <activity android:name=".SQLite.NoteActivity" />
+        <activity android:name=".SQLite.NewNoteActivity" />
+        <activity android:name=".SQLite.NoteItemActivity" />
+        <activity android:name=".CreditCalculator.ShowCreditResult" />
+        <activity android:name=".Portfolio.PortfolioActivity"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

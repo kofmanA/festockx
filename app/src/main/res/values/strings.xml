@@ -2,7 +2,7 @@
     <string name="app_name">FE&lt;StockX></string>
 
     <string name="about">About</string>
-    <string name="description">Stock X is intended to be a tool for education about finances such as loans, currency exchange and the sotck market. It is a sort of simulator that allows you to use "virtual" money to see what exactly could happen in the real world when you ask for loans, exchange your currency or invest in stocks. Our app can help you learn about the behaviour of the fluctuating world of finances without risking real money</string>
+    <string name="description">Stock X is intended to be a tool for education about finances such as loans, currency exchange and the stock market. It is a sort of simulator that allows you to use "virtual" money to see what exactly could happen in the real world when you ask for loans, exchange your currency or invest in stocks. Our app can help you learn about the behaviour of the fluctuating world of finances without risking real money</string>
     <string name="purpose">Stock X was created by 5th semester students as a part of both Internet Application Development III (420-524-DW) and Mobile Software Development (420-518-DW) courses for the Dawson College Computer Science program.</string>
     <string name="devs">Developers</string>
     <string name="felicia">Felicia Gorgacheva</string>
@@ -14,7 +14,7 @@
     <string name="simondes">My name is Simon Guevara-Ponce and I\'m a Computer Science student at Dawson College.</string>
     <string name="zhides">Hi! I want to be a developer and I dream about going to space!</string>
     <string name="alexdes">I\'m Alex and I love music and app development.</string>
-    
+
     <string name="forex">Foreign Currency Exchange</string>
     <string name="amount">Amount</string>
     <string name="fromcurrency">From</string>
@@ -55,6 +55,8 @@
     <string name="lastName">Last Name:</string>
     <string name="lastNameHint">Enter your last name here</string>
     <string name="emailAddress">Email Address: </string>
+    <string name="password">Password:</string>
+    <string name="register">Register</string>
     <string name="emailAddressHint">example@gmail.com</string>
     <string name="currency">Preferred Currency:</string>
     <string name="pStockEx">Preferred Stock Exchange: </string>
@@ -106,4 +108,19 @@
     <string name="noteButton">Notes</string>
     <string name="stockQuote">Stock Quote</string>
     <string name="practice">Practice Stocks</string>
+    <string name="calculate">Calculate</string>
+    <string name="buyStock">Buy Stock</string>
+    <string name="buyStockPrompt">Enter number of selected stocks to purchase</string>
+    <string name="moneyLeftDialogTitle">Balance</string>
+    <string name="moneyLeftDialogMessage">Your current balance now is: </string>
+    <string name="moneyLeftDialogGoTo">Would you like to see your portfolio?</string>
+    <string name="sellStocksTitle">Sell your stocks</string>
+    <string name="sellStockMessage">How many stocks would you like to sell?</string>
+    <string name="sell">Sell</string>
+    <string name="portfolio">Stock Portfolio</string>
+    <string name="showPortfolioSnack"> Would you like to open your portfolio?</string>
+    <string name="showPortfolio"> Show Portfolio</string>
+    <string name="tickerHint">Press on a ticker to purchase</string>
+    <string name="lastUpdatedAt">Last updated at:</string>
+    <string name="stockX">Stock X</string>
 </resources>

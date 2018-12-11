@@ -1,6 +1,5 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Hints;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,17 +15,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class HintsActivity extends MenuActivity {
     FirebaseAuth mAuth;
@@ -49,7 +49,8 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Initializes the necessary variables for firebase
+     * Initializes the necessary variables for Firebase
+     * @author Zhi Jie Cao
      */
     protected void initializeFirebase(){
         FirebaseApp.initializeApp(this);
@@ -71,7 +72,7 @@ public class HintsActivity extends MenuActivity {
                             fetchDatabaseInfo();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("test", "signInWithEmail:failure", task.getException());
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(HintsActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -80,7 +81,7 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Fetches the info from the Database and display
+     * Fetches the info from the Database and display them,
      * @author Zhi Jie Cao
      */
     protected void fetchDatabaseInfo(){
@@ -114,7 +115,7 @@ public class HintsActivity extends MenuActivity {
     }
 
     /**
-     * Displays the hint object in the activity.
+     * Displays the hint object into the activity.
      * @param hint
      */
     protected void displayData(final Hint hint){

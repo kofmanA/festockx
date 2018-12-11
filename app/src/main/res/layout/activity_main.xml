@@ -5,14 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:weightSum="8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/stockX"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="75sp"
+                android:layout_margin="0dp"
+                android:fontFamily="@font/bungee_reg"
+                />
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_margin="0dp"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <Button
             android:layout_width="0dp"
@@ -52,7 +72,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
     <Button
         android:layout_width="0dp"
@@ -64,6 +84,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
+
         android:padding="30dp"
         android:onClick="launchForEx"
         android:background="@color/accent3"
@@ -93,7 +114,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="2">
     <Button
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -120,6 +141,7 @@
         android:layout_marginLeft="10dp"
         android:background="@color/accent6"
         android:drawableLeft="@drawable/presentation_icon"
+        android:onClick="launchPortfolio"
         />
     </LinearLayout>
 </LinearLayout>
