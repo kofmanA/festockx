@@ -248,7 +248,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
     private void popUpMoneyDialog(String moneyLeft,Context context) {
         CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
         Snackbar snackbar = Snackbar
-                .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft+" "+context.getString(R.string.showPortfolio), Snackbar.LENGTH_LONG);
+                .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft, Snackbar.LENGTH_LONG);
         snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
