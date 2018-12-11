@@ -35,6 +35,13 @@
             android:textSize="30sp"
             android:textAlignment="center"
             android:text="@string/balance"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/porthint"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:text="@string/portfolioHint"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,6 +49,7 @@
             android:backgroundTint="@color/colorPrimary"
             android:id="@+id/ownedStockRecyclerView">
         </android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
 </LinearLayout>

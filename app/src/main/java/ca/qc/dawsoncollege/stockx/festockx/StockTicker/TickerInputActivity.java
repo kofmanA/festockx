@@ -10,6 +10,10 @@ import android.widget.ListView;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
+/**
+ * Activity that contains a single ticker input box for the activity
+ * @author Alex
+ */
 public class TickerInputActivity extends Activity {
 
     ListView tickerBoxes;

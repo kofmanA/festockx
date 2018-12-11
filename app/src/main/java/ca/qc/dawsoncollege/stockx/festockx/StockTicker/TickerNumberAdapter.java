@@ -18,6 +18,10 @@ import java.util.List;
 
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
+/**This is the adapter that contains the Spinner
+ * Also reloads tickers from landscape
+ * @author Alex
+ */
 public class TickerNumberAdapter extends BaseAdapter {
     Context context;
     int numTickers;
