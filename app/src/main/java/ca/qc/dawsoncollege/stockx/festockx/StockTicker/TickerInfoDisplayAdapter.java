@@ -71,7 +71,14 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         this.tickers = tickers;
     }
 
-
+    /**
+     * Creates dialog to buy the stock being long pressed
+     * Also calls the method which will query our API to buy a stock
+     * @param parent
+     * @param viewType
+     * @return
+     * @author Alex and Zhijie
+     */
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_ticker_info, parent, false);
@@ -151,6 +158,12 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         return holder;
     }
 
+    /**
+     * Binds view with all of the ticker's information
+     * @param holder
+     * @param position
+     * @author Alex
+     */
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
         TickerStock tickerStats = tickers.get(position);
@@ -169,7 +182,10 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         return tickers.size();
     }
 
-
+    /**
+     * Holder contains information to put inside of an individual view holder
+     * @author Alex
+     */
     class Holder extends RecyclerView.ViewHolder {
         public Context context;
         TextView symbolName;
@@ -197,6 +213,12 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
         }
     }
 
+    /**
+     * Performs the API call to retreive the amount of cash the user has remaining in their balance
+     * @param parent
+     * @param holder
+     * @author Alex and Zhijie
+     */
     public void getCashLeft(ViewGroup parent, Holder holder) {
         final JSONObject tickerQuantity = new JSONObject();
         try {
@@ -223,7 +245,7 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
                         json = new JSONObject(result);
                         if (json.has("cashleft")) {
                             moneyLeft = json.getString("cashleft");
-                            popUpMoneyDialog(moneyLeft,context);
+                            popUpMoneyDialog(moneyLeft,context,parent.getContext());
                         } else if(json.has("error")) {
                             String errorMsg = json.getString("error");
                             CharSequence text = "ERROR: " + errorMsg;
@@ -245,8 +267,8 @@ public class TickerInfoDisplayAdapter extends RecyclerView.Adapter<TickerInfoDis
      * @param context
      * @author Simon Guevara-Ponce
      */
-    private void popUpMoneyDialog(String moneyLeft,Context context) {
-        CoordinatorLayout coordinatorLayout =  ((Activity) context).findViewById(R.id.coordinatorLayoutTicker);
+    private void popUpMoneyDialog(String moneyLeft,Context context, Context parentContext) {
+        CoordinatorLayout coordinatorLayout =  ((Activity) parentContext).findViewById(R.id.coordinatorLayoutTicker);
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout,  context.getString(R.string.balanceRemaining)+" " +moneyLeft, Snackbar.LENGTH_LONG);
         snackbar.setAction(R.string.showPortfolio, new View.OnClickListener() {

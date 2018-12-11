@@ -88,6 +88,7 @@ public class StockNumberSelectActivity extends MenuActivity {
      * Passes intent of a string arraylist containing all of the user's submitted tickers
      * This is to allow the ShowTickerInfo class to perform the API call
      * @param v
+     * @author alex
      */
     public void submit(View v){
         //Submit strings of all text fields
@@ -121,6 +122,11 @@ public class StockNumberSelectActivity extends MenuActivity {
         return tickers;
     }
 
+    /**
+     * Saves the state of the tickers to be reloaded when rotated
+     * @param outState
+     * @author Alex
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -135,6 +141,11 @@ public class StockNumberSelectActivity extends MenuActivity {
         }
     }
 
+    /**
+     * Puts tickers back in their place when rotation happens
+     * @param savedInstanceState
+     * @author Alex and Zhijie
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

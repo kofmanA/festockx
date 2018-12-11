@@ -1,5 +1,10 @@
 package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
+/**
+ * Class that represents an individual bought stock
+ * Used to keep data retreived from the API
+ * @author Alex
+ */
 public class TickerStock {
     private String tickerName;
     private String companyName;
