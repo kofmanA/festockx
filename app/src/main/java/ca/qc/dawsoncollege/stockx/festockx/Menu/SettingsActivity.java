@@ -1,27 +1,29 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Menu;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 
 public class SettingsActivity extends MenuActivity {
     EditText fNameET;
     EditText lNameET;
     EditText eAddressET;
+    EditText passwordET;
     Spinner pStockExSpin;
     Spinner currencySpin ;
 
@@ -33,6 +35,7 @@ public class SettingsActivity extends MenuActivity {
         fNameET = (EditText) findViewById(R.id.fnameTV);
         lNameET = (EditText) findViewById(R.id.lnameTV);
         eAddressET = (EditText) findViewById(R.id.eAddressTV);
+        passwordET = (EditText) findViewById(R.id.PasswordTV);
         pStockExSpin = (Spinner) findViewById(R.id.pStockEx);
         currencySpin = (Spinner) findViewById(R.id.curr);
         showSettings();
@@ -51,9 +54,10 @@ public class SettingsActivity extends MenuActivity {
             editor.putString("fName", fNameET.getText().toString());
             editor.putString("lName", lNameET.getText().toString());
             editor.putString("eAddress", eAddressET.getText().toString());
+            editor.putString("password", passwordET.getText().toString());
             editor.putString("pStockEx", pStockExSpin.getSelectedItem().toString());
             editor.putString("currency", currencySpin.getSelectedItem().toString());
-            editor.putString("lastUpdated",new Date().toString());
+            editor.putString("lastUpdated", new Date().toString());
             editor.commit();
 
             Toast.makeText(this,R.string.saved,Toast.LENGTH_SHORT).show();
@@ -72,7 +76,6 @@ public class SettingsActivity extends MenuActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "Settings", MODE_PRIVATE);
         if(prefs.contains("fName")){
-            Log.i("HELLO","saved");
             fNameET.setText(prefs.getString("fName","ERROR"));
         }
         if(prefs.contains("lName")){
@@ -86,6 +89,9 @@ public class SettingsActivity extends MenuActivity {
         }
         if(prefs.contains("currency")){
             currencySpin.setPrompt(prefs.getString("currecy","ERROR"));
+        }
+        if(prefs.contains("lastUpdated")){
+            ((TextView) findViewById(R.id.lastUpdated)).setText(getString(R.string.lastUpdatedAt) + " " +  prefs.getString("lastUpdated", "ERROR"));
         }
     }
 
@@ -144,6 +150,11 @@ public class SettingsActivity extends MenuActivity {
     protected void onStop(){
         super.onStop();
         finish();
+    }
+
+    public void clickRegister(View v){
+        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("http://stockxportfolio.herokuapp.com/register"));
+        startActivity(link);
     }
 
 }

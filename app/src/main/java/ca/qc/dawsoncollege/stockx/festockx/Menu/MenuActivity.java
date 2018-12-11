@@ -1,6 +1,5 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Menu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +7,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import ca.qc.dawsoncollege.stockx.festockx.About.AboutActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
+
 public class MenuActivity extends AppCompatActivity {
 
     /**
      * creates the options menu
      * @param menu
      * @return
+     * @author Felicia
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -27,6 +30,7 @@ public class MenuActivity extends AppCompatActivity {
      * detects which element in the menu was clicked and performs the appropriate action for what what selected
      * @param item
      * @return
+     * @author Felicia
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

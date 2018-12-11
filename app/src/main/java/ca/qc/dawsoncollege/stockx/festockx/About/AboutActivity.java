@@ -1,18 +1,16 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.About;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 /**
  * @author Felicia
  */
-public class AboutActivity extends MenuActivity  {
+public class AboutActivity extends MenuActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Forex;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +23,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -135,8 +139,6 @@ public class ForexActivity extends MenuActivity {
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                     from.setAdapter(spinnerArrayAdapter);
                     to.setAdapter(spinnerArrayAdapter);
-
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();

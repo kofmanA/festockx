@@ -7,20 +7,20 @@
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/buyStockPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lookUpName"
+        android:text="@string/buyStockPrompt"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editTextDialogUserInput"
+        android:id="@+id/editStockBuyAmount"
         android:layout_width="match_parent"
-        android:backgroundTint="@color/accent9"
+        android:inputType="number"
         android:layout_height="wrap_content" >
 
+        <requestFocus />
 
-<requestFocus />
     </EditText>
 
 </LinearLayout>

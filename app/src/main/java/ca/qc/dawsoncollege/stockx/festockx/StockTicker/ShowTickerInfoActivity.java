@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class ShowTickerInfoActivity extends MenuActivity {
@@ -49,6 +48,10 @@ public class ShowTickerInfoActivity extends MenuActivity {
         }
     }
 
+    /**
+     * retreives all stock info from the API based on inputted tickers
+     * @author Alex
+     */
     public void getAllStockInfo(){
         String beginningUrl = "https://www.worldtradingdata.com/api/v1/stock?symbol=";
         /*Comma separated string of tickers for the URL.
@@ -75,7 +78,10 @@ public class ShowTickerInfoActivity extends MenuActivity {
         }
     }
 
-
+    /**
+     * Downloads the stocks from the Stock API performing the actual request
+     * @author Alex
+     */
     private class DownloadStock extends AsyncTask<String,Void,String> {
 
         protected void onPostExecute(String result) {
@@ -138,6 +144,14 @@ public class ShowTickerInfoActivity extends MenuActivity {
         }
     }
 
+    /**
+     * Downloads content from query URL
+     * @param myUrl
+     * @return
+     * @throws IOException
+     * @author Tricia based on the HTTP lab in Dawson College android on GitLAb
+     * source: https://gitlab.com/Android518-2018/topic12-02-http-get.git
+     */
     private String downloadUrl(String myUrl) throws IOException {
         InputStream is = null;
         HttpURLConnection conn = null;
@@ -177,6 +191,16 @@ public class ShowTickerInfoActivity extends MenuActivity {
         }
     }
 
+    /**
+     * Writes to an output stream and returns the string representing the result
+     *
+     * @param is
+     * @return
+     * @throws IOException
+     * @throws UnsupportedEncodingException
+     * @author Tricia, Also taken from HTTP android lab in Dawson College mobile developement course on GitLab
+     * source: https://gitlab.com/Android518-2018/topic12-02-http-get.git
+     */
     public String readIt(InputStream is) throws IOException,UnsupportedEncodingException {
         int bytesRead;
         int totalRead = 0;
