@@ -1,16 +1,17 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.About;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class PersonFragment extends Fragment {
 
@@ -19,6 +20,12 @@ public class PersonFragment extends Fragment {
     private Object[] info;
     private int id;
 
+    /**
+     * Method to instantiate a personFragment
+     * @param page
+     * @param id
+     * @return
+     */
     public static PersonFragment newInstance(int page, int id) {
         Bundle args = new Bundle();
         args.putInt("page", page);
@@ -29,6 +36,10 @@ public class PersonFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called when the fragment is created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +47,13 @@ public class PersonFragment extends Fragment {
         id = getArguments().getInt("" + fragPage);
     }
 
+    /**
+     * Called when the view is created
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
@@ -43,6 +61,11 @@ public class PersonFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Called when the view is created
+     * @param view
+     * @param bundle
+     */
     @Override
     public void onViewCreated(View view, Bundle bundle){
         TextView tv = (TextView) view.findViewById(R.id.persontv);
@@ -71,6 +94,7 @@ public class PersonFragment extends Fragment {
      * gives the id of the element that invoked this method to receive the name of the person "clicked"
      * and shows an appropriate alert containing the person's description
      * @param view
+     * @author Felicia Gorgacheva
      */
     public void showDescription (View view){
 
@@ -93,6 +117,7 @@ public class PersonFragment extends Fragment {
      * receives an id to know which element was clicked and returns the corresponding description string
      * @param id
      * @return
+     * @author Felicia Gorgacheva
      */
     private String getDescription (int id) {
         String description = getString(R.string.probdes);
@@ -113,6 +138,7 @@ public class PersonFragment extends Fragment {
      * receives an id and returns the corresponding name of the person clicked
      * @param id
      * @return
+     * @author Felicia Gorgacheva
      */
     private String getName(int id){
         String name = getString(R.string.probname);
@@ -129,6 +155,12 @@ public class PersonFragment extends Fragment {
         return name;
     }
 
+    /**
+     * Gets the image resource based on its id
+     * @param id
+     * @return
+     * @author Felicia Gorgacheva
+     */
     private Drawable getImg(int id){
         switch(id){
             case R.string.zhijie:

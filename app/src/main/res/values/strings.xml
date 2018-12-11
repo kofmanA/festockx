@@ -120,4 +120,7 @@
     <string name="portfolio">Stock Portfolio</string>
     <string name="showPortfolioSnack"> Would you like to open your portfolio?</string>
     <string name="showPortfolio"> Show Portfolio</string>
+    <string name="tickerHint">Press on a ticker to purchase</string>
+    <string name="lastUpdatedAt">Last updated at:</string>
+    <string name="stockX">Stock X</string>
 </resources>

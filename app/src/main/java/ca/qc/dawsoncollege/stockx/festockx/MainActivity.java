@@ -3,10 +3,13 @@ package ca.qc.dawsoncollege.stockx.festockx;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 
 import ca.qc.dawsoncollege.stockx.festockx.CreditCalculator.CreditCostActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Forex.ForexActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Hints.HintsActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.SettingsActivity;
 import ca.qc.dawsoncollege.stockx.festockx.Portfolio.PortfolioActivity;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.NoteActivity;
 import ca.qc.dawsoncollege.stockx.festockx.StockTicker.StockNumberSelectActivity;

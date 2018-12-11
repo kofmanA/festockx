@@ -1,23 +1,22 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Menu;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 
 public class SettingsActivity extends MenuActivity {
@@ -58,7 +57,7 @@ public class SettingsActivity extends MenuActivity {
             editor.putString("password", passwordET.getText().toString());
             editor.putString("pStockEx", pStockExSpin.getSelectedItem().toString());
             editor.putString("currency", currencySpin.getSelectedItem().toString());
-            editor.putString("lastUpdated",new Date().toString());
+            editor.putString("lastUpdated", new Date().toString());
             editor.commit();
 
             Toast.makeText(this,R.string.saved,Toast.LENGTH_SHORT).show();
@@ -90,6 +89,9 @@ public class SettingsActivity extends MenuActivity {
         }
         if(prefs.contains("currency")){
             currencySpin.setPrompt(prefs.getString("currecy","ERROR"));
+        }
+        if(prefs.contains("lastUpdated")){
+            ((TextView) findViewById(R.id.lastUpdated)).setText(getString(R.string.lastUpdatedAt) + " " +  prefs.getString("lastUpdated", "ERROR"));
         }
     }
 
@@ -151,7 +153,7 @@ public class SettingsActivity extends MenuActivity {
     }
 
     public void clickRegister(View v){
-        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stockxportfolio.herokuapp.com/register"));
+        Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("http://stockxportfolio.herokuapp.com/register"));
         startActivity(link);
     }
 

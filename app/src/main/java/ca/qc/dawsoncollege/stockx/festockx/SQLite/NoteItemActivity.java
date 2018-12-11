@@ -1,11 +1,10 @@
 package ca.qc.dawsoncollege.stockx.festockx.SQLite;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class NoteItemActivity extends MenuActivity {

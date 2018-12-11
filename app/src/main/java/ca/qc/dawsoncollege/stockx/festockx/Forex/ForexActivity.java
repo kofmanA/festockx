@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Forex;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +23,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
+
 import static android.content.ContentValues.TAG;
 
 /**

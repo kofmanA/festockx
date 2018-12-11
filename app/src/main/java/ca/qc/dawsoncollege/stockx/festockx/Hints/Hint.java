@@ -1,4 +1,4 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Hints;
 /**
  * This class is an empty class that is used to load hints from the Database and store information.
  * It represents an individual hint.

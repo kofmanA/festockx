@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/coordinatorLayoutTicker"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".StockTicker.TickerInfoActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="15dp"
         >
 
 
@@ -29,7 +31,8 @@
             android:id="@+id/symbolDisplay"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -130,6 +133,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dip"
+        android:layout_marginTop="10dp"
         android:background="#000000" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
