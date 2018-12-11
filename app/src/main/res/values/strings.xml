@@ -122,4 +122,5 @@
     <string name="showPortfolio"> Show Portfolio</string>
     <string name="tickerHint">Press on a ticker to purchase</string>
     <string name="lastUpdatedAt">Last updated at:</string>
+    <string name="stockX">Stock X</string>
 </resources>

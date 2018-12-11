@@ -1,10 +1,8 @@
 package ca.qc.dawsoncollege.stockx.festockx.StockTicker;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class StockNumberSelectActivity extends MenuActivity {

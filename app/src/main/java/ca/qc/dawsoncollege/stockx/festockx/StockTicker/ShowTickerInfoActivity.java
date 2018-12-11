@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class ShowTickerInfoActivity extends MenuActivity {

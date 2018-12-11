@@ -1,12 +1,14 @@
-package ca.qc.dawsoncollege.stockx.festockx;
+package ca.qc.dawsoncollege.stockx.festockx.Menu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import ca.qc.dawsoncollege.stockx.festockx.About.AboutActivity;
+import ca.qc.dawsoncollege.stockx.festockx.R;
 
 public class MenuActivity extends AppCompatActivity {
 

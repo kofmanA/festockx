@@ -1,24 +1,17 @@
 package ca.qc.dawsoncollege.stockx.festockx.Portfolio;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,27 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
-import ca.qc.dawsoncollege.stockx.festockx.MenuActivity;
+import ca.qc.dawsoncollege.stockx.festockx.Menu.MenuActivity;
 import ca.qc.dawsoncollege.stockx.festockx.R;
 import ca.qc.dawsoncollege.stockx.festockx.SQLite.ItemNoteAdapter;
 
@@ -106,6 +82,7 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                         JWTToken = json.getString("access_token");
                         allStocksData.put("token", JWTToken);
                         balanceData.put("token", JWTToken);
+                        //This request gets all the owned stocks
                         new Request() {
                             @Override
                             protected void onPostExecute(String result) {
@@ -131,13 +108,13 @@ public class PortfolioActivity extends MenuActivity implements ItemNoteAdapter.R
                             ;
                         }.execute(allStocksData);
 
+                        //this request gets the balance
                         new Request() {
                             @Override
                             protected void onPostExecute(String result) {
                                 try {
-                                    Log.d("HELLO", result);
+
                                     JSONObject json = new JSONObject(result);
-                                    Log.d("HELLO", json.keys().next().toString());
                                     json = new JSONObject(result);
                                     if (json.has("balance")) {
                                         String moneyLeft = json.getString("balance");

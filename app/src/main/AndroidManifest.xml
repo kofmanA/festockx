@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutActivity"></activity>
-        <activity android:name=".ForexActivity"></activity>
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".About.AboutActivity"></activity>
+        <activity android:name=".Forex.ForexActivity"></activity>
+        <activity android:name=".Menu.SettingsActivity" />
         <activity android:name=".StockTicker.StockNumberSelectActivity"></activity>
         <activity
             android:name=".StockTicker.TickerInputActivity"
@@ -25,7 +25,7 @@
             android:label="@string/title_activity_show_ticker_info" />
         <activity android:name=".StockTicker.TickerInfoActivity" />
         <activity android:name=".CreditCalculator.CreditCostActivity"></activity>
-        <activity android:name=".HintsActivity" />
+        <activity android:name=".Hints.HintsActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
